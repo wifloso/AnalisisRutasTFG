@@ -5,8 +5,19 @@
  */
 package analisis_rutas;
 
+import CSVReader.EPLUtils;
+import CSVReader.Trazo;
+import Event.PuntoEvent;
 import com.espertech.esper.client.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -14,23 +25,27 @@ import java.util.Scanner;
  */
 public class AnalisisRutas 
 {
+    private static Logger LOG = LoggerFactory.getLogger(AnalisisRutas.class);
 
     /**
-     * @param args the command line arguments
+     * Creates simple random Temperature events and lets the implementation class handle them.
      */
+
+    
     public static void main(String[] args) 
     {
+        
+        LOG.debug("Starting...");
         System.out.println("Intruduzca el nombre del archivo dentro de la carpeta files: \n");
+        LOG.debug("campsa.csv");
         String entradaTeclado = "campsa.csv";
         //Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
         //entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner
         Trazo t = new Trazo(entradaTeclado); //ejemplo: campsa.scv
         //t.imprimir();
         //t.difTime();
-        //t.generateDataCEP();
-        
-        EPLUtils epl = new EPLUtils();
-        epl.ReadData(t.puntos);
+        //t.generateDataCEP();       
+        t.startSendingCoodinates();
     }
     
 }

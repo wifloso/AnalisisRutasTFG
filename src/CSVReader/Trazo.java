@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package analisis_rutas;
+package CSVReader;
 
+import Event.PuntoEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -20,8 +23,28 @@ import java.util.logging.Logger;
  */
 public class Trazo 
 {
-    List<PuntoEvent> puntos;
+    private List<PuntoEvent> puntos;
+    
+    @Autowired
+    private  EPLUtils epl = new EPLUtils();
 
+    
+    private static org.slf4j.Logger LOG = LoggerFactory.getLogger(Trazo.class);
+    
+    public void startSendingCoodinates() {
+
+                LOG.debug("Lectura de CSV iniciada");
+                epl.afterPropertiesSet();
+                for (PuntoEvent event : puntos) {
+                    epl.handle(event);
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        LOG.error("Thread Interrupted", e);
+                    }
+                }           
+    }
+    
     public Trazo(String archivo) 
     {
         puntos = new ArrayList<PuntoEvent>();

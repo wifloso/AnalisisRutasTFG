@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package analisis_rutas;
+package Event;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -15,7 +16,7 @@ public class PuntoEvent
     private float longitud;
     private float latitud;
     private float speed;
-    private Calendar time; 
+    private Calendar time;
     
     public PuntoEvent(float longitud, float latitud, float velocidad, String momento) 
     {
@@ -39,9 +40,7 @@ public class PuntoEvent
         c.set( Calendar.SECOND, Integer.parseInt( sTime[2] ) );
         c.set( Calendar.MILLISECOND, 0 );
         return c;
-    }
-    
-    
+    }  
     
     public float getLongitud() 
     {
@@ -61,6 +60,11 @@ public class PuntoEvent
     public Calendar getTime() 
     {
         return time;
+    }
+    
+    public Date getDateTime() 
+    {
+        return time.getTime();
     }
     
     public int getMonth(String s)
@@ -115,8 +119,7 @@ public class PuntoEvent
     @Override
     public String toString()
     {
-        return "Latitud:"+latitud+" Longitud:"+longitud+" Velocidad:"+speed+""
-                + " Momento:"+time.getTime();
+        return "PuntoEvent[Latitud:"+latitud+" Longitud:"+longitud+" Velocidad:"+speed+"]";
     }
     
 
