@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
 @Scope(value = "singleton")
 public class EPLUtils implements InitializingBean{
     
-    private static Logger LOG = LoggerFactory.getLogger(EPLUtils.class);
     
     
     private EPServiceProvider epService;
@@ -40,9 +39,8 @@ public class EPLUtils implements InitializingBean{
     
         public void initService() {
 
-        LOG.debug("Initializing Servcie ..");
         Configuration config = new Configuration();
-        config.addEventTypeAutoName("analisis_rutas");
+        config.addEventTypeAutoName("Event");
         epService = EPServiceProviderManager.getDefaultProvider(config);
 
         CreatePuntoEventExpression();
@@ -50,22 +48,19 @@ public class EPLUtils implements InitializingBean{
 
     private void CreatePuntoEventExpression() {
         
-        LOG.debug("create Punto Event Expression");
+        PuntoEventSubscriber = new PuntoEventSubscriber();
         PuntoStatement = epService.getEPAdministrator().createEPL(PuntoEventSubscriber.getStatement());
         PuntoStatement.setSubscriber(PuntoEventSubscriber);
     }
     
     public void handle(PuntoEvent event) {
 
-        LOG.debug(event.toString());
         epService.getEPRuntime().sendEvent(event);
 
     }
 
     @Override
     public void afterPropertiesSet() {
-        
-        LOG.debug("Configuring..");
         initService();
     }
     

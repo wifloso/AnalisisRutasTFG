@@ -25,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class AnalisisRutas 
 {
-    private static Logger LOG = LoggerFactory.getLogger(AnalisisRutas.class);
 
     /**
      * Creates simple random Temperature events and lets the implementation class handle them.
@@ -33,11 +32,8 @@ public class AnalisisRutas
 
     
     public static void main(String[] args) 
-    {
-        
-        LOG.debug("Starting...");
+    {       
         System.out.println("Intruduzca el nombre del archivo dentro de la carpeta files: \n");
-        LOG.debug("campsa.csv");
         String entradaTeclado = "campsa.csv";
         //Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
         //entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner

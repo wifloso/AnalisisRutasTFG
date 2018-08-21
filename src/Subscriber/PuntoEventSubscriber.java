@@ -17,25 +17,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class PuntoEventSubscriber implements StatementSubscriber{
 
-    private static Logger LOG = LoggerFactory.getLogger(PuntoEventSubscriber.class);
+
     
     @Override
     public String getStatement() {
-        return "select latitud from PuntoEvent";
+        return "select latitud, longitud, speed from PuntoEvent";
     }
     
     
     public void update(Map<String, Float> eventMap) {
-
         // average temp over 10 secs
         float latitud = (float) eventMap.get("latitud");
-
+        float longitud = (float) eventMap.get("longitud");
+        float speed = (float) eventMap.get("speed");
+        
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
-        sb.append("\n- [PuntoEvent] latitud = " + latitud);
+        sb.append("\n- [PuntoEvent]: ");
+        sb.append("\n latitud = " + latitud);
+        sb.append("\n longitud = " + longitud);
+        sb.append("\n speed = " + speed);       
         sb.append("\n---------------------------------");
-
-        LOG.debug(sb.toString());
+        System.out.println(sb);
     }
     
 }

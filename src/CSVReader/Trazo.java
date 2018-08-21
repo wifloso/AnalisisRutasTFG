@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -29,18 +28,17 @@ public class Trazo
     private  EPLUtils epl = new EPLUtils();
 
     
-    private static org.slf4j.Logger LOG = LoggerFactory.getLogger(Trazo.class);
     
     public void startSendingCoodinates() {
 
-                LOG.debug("Lectura de CSV iniciada");
+
                 epl.afterPropertiesSet();
                 for (PuntoEvent event : puntos) {
                     epl.handle(event);
                     try {
                         Thread.sleep(1);
                     } catch (InterruptedException e) {
-                        LOG.error("Thread Interrupted", e);
+                       
                     }
                 }           
     }
