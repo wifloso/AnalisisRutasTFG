@@ -90,6 +90,7 @@ public class Trazo
         } 
         catch (FileNotFoundException ex) 
         {
+            System.out.println("El fichero \""+archivo+"\"sa no existe");
             Logger.getLogger(Trazo.class.getName()).log(Level.SEVERE, null, ex);
         } 
         catch (IOException ex) 

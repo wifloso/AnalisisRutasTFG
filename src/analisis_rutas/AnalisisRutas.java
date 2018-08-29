@@ -33,10 +33,18 @@ public class AnalisisRutas
     
     public static void main(String[] args) 
     {       
-        System.out.println("Intruduzca el nombre del archivo dentro de la carpeta files: \n");
-        String entradaTeclado = "campsa.csv";
-        //Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
-        //entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner
+        System.out.println("Intruduzca el nombre del archivo dentro de la carpeta files");
+        System.out.println("Si pulsa intro se leera la ruta predeterminada");
+        System.out.println("...");
+        String entradaTeclado = "";
+        Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
+        entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner
+        if(entradaTeclado.isEmpty()){
+            System.out.println("Lectura de ruta predeterminada... \n");
+            entradaTeclado = "campsa.csv";
+        }else{
+            System.out.println("Lectura de "+entradaTeclado+"... \n");
+        }
         Trazo t = new Trazo(entradaTeclado); //ejemplo: campsa.scv
         //t.imprimir();
         //t.difTime();
