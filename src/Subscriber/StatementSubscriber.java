@@ -9,6 +9,7 @@ package Subscriber;
  *
  * @author Carlos
  */
+
 public interface StatementSubscriber {
     
      public String getStatement();
