@@ -5,6 +5,7 @@
  */
 package Subscriber;
 
+import Event.PuntoEvent;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,24 +22,22 @@ public class PuntoEventSubscriber implements StatementSubscriber{
     
     @Override
     public String getStatement() {
-        return "select latitud, longitud, speed from PuntoEvent";
+        return "select * from PuntoEvent as a";
     }
     
-    
-    public void update(Map<String, Float> eventMap) {
+    public void update(Map<String, PuntoEvent> eventMap) {
         // average temp over 10 secs
-        float latitud = (float) eventMap.get("latitud");
-        float longitud = (float) eventMap.get("longitud");
-        float speed = (float) eventMap.get("speed");
-        
+        PuntoEvent punto = (PuntoEvent) eventMap.get("a");
+
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
         sb.append("\n- [PuntoEvent]: ");
-        sb.append("\n latitud = " + latitud);
-        sb.append("\n longitud = " + longitud);
-        sb.append("\n speed = " + speed);       
+        sb.append("\n latitud = " + punto.getLatitud() );
+        sb.append("\n longitud = " + punto.getLongitud() );
+        sb.append("\n speed = " + punto.getSpeed() );    
+        sb.append("\n timestamp = " + punto.getTimestamp().toString() );  
         sb.append("\n---------------------------------");
-        System.out.println(sb);
-    }
-    
+         System.out.println(sb);
+    }   
+
 }

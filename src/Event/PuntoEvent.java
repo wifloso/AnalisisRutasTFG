@@ -17,6 +17,11 @@ public class PuntoEvent
     private float latitud;
     private float speed;
     private Calendar time;
+    private Date timestamp;
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
     
     public PuntoEvent(float longitud, float latitud, float velocidad, String momento) 
     {
@@ -24,6 +29,7 @@ public class PuntoEvent
         this.latitud = latitud;
         this.speed = velocidad;
         this.time = setTime(momento);
+        this.timestamp = getDateTime();
     }
     
     //metodo para pasar el String de la fecha a un objeto Calendar

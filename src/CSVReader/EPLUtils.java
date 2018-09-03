@@ -11,8 +11,6 @@ import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,8 +32,12 @@ public class EPLUtils implements InitializingBean{
     private EPStatement PuntoStatement;
     
     @Autowired
-    @Qualifier("PuntoEventSubscriber")
+    @Qualifier("PuntoEvent")
     private StatementSubscriber PuntoEventSubscriber;
+    
+    @Autowired
+    @Qualifier("FinDesplazamiento")
+    private StatementSubscriber FinDesplazamientoSubscriber;
     
         public void initService() {
 
@@ -44,6 +46,7 @@ public class EPLUtils implements InitializingBean{
         epService = EPServiceProviderManager.getDefaultProvider(config);
 
         CreatePuntoEventExpression();
+        CreateFinDesplazamientoExpesion();
     }
 
     private void CreatePuntoEventExpression() {
@@ -51,6 +54,12 @@ public class EPLUtils implements InitializingBean{
         PuntoEventSubscriber = new PuntoEventSubscriber();
         PuntoStatement = epService.getEPAdministrator().createEPL(PuntoEventSubscriber.getStatement());
         PuntoStatement.setSubscriber(PuntoEventSubscriber);
+    }
+    
+    private void CreateFinDesplazamientoExpesion(){
+        FinDesplazamientoSubscriber = new FinDesplazamientoSubscriber();
+        PuntoStatement = epService.getEPAdministrator().createEPL(FinDesplazamientoSubscriber.getStatement());
+        PuntoStatement.setSubscriber(FinDesplazamientoSubscriber);
     }
     
     public void handle(PuntoEvent event) {
