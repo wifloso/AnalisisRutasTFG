@@ -5,42 +5,36 @@
  */
 package Subscriber;
 
-import CSVReader.EPLUtils;
-import CSVReader.Trazo;
 import Event.PuntoEvent;
 import Event.Test;
 import java.util.Map;
 
 /**
  *
- * @author CarlosAA
+ * @author Carlos
  */
-public class TestSubscriber implements StatementSubscriber{
+public class InicioDesplazamientoSubscriber implements StatementSubscriber{
     
     
     @Override
     public String getStatement() {
-        return "select a1 "
-                + " from PuntoEvent as a1 where flag = \"inicio\" ";
-    }
+        return "select a2 " +
+                "from Test a2";
+    } 
     
     
-    public void update(Map<String, PuntoEvent> eventMap) {
+    public void update(Map<String, Test> eventMap) {
         
-        PuntoEvent event = (PuntoEvent) eventMap.get("a1");
+        Test event = (Test) eventMap.get("a2");
         
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
-        sb.append("\n- [Test]: ");
-        sb.append("\n- [Test]: ");
-        sb.append("\n- [Test]: ");
+        sb.append("\n- [Inicio Desplazamiento]: ");
         sb.append("\n latitud = " + event.getLatitud());
         sb.append("\n longitud = " + event.getLongitud());
         sb.append("\n speed = " + event.getSpeed()); 
         sb.append("\n time = " + event.getTimestamp().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
-        Trazo.epl.handle(new Test(event));
     }
-    
 }

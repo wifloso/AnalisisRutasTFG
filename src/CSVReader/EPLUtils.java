@@ -6,6 +6,7 @@
 package CSVReader;
 
 import Event.PuntoEvent;
+import Event.Test;
 import Subscriber.*;
 import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPServiceProvider;
@@ -40,7 +41,11 @@ public class EPLUtils implements InitializingBean{
     private StatementSubscriber FinDesplazamientoSubscriber;
     
     @Autowired
-    @Qualifier("PuntoEventSubscriber")
+    @Qualifier("InicioDesplazamiento")
+    private StatementSubscriber InicioDesplazamientoSubscriber;
+    
+    @Autowired
+    @Qualifier("Test")
     private StatementSubscriber TestSubscriber;
     
         public void initService() {
@@ -53,6 +58,8 @@ public class EPLUtils implements InitializingBean{
         CreatePuntoEventExpression();
         CreateFinDesplazamientoExpesion();
         CreateTestExpression();
+        CreateInicioDesplazamientoExpression();
+        
     }
 
     private void CreateTestExpression() {
@@ -62,7 +69,12 @@ public class EPLUtils implements InitializingBean{
         PuntoStatement.setSubscriber(TestSubscriber);
     }
         
+    private void CreateInicioDesplazamientoExpression() {
         
+        InicioDesplazamientoSubscriber = new InicioDesplazamientoSubscriber();
+        PuntoStatement = epService.getEPAdministrator().createEPL(InicioDesplazamientoSubscriber.getStatement());
+        PuntoStatement.setSubscriber(InicioDesplazamientoSubscriber);
+    }    
         
     private void CreatePuntoEventExpression() {
         
@@ -80,6 +92,11 @@ public class EPLUtils implements InitializingBean{
     public void handle(PuntoEvent event) {
         //CurrentTimeEvent
         epService.getEPRuntime().sendEvent(new CurrentTimeEvent(event.getDateTime().getTime()));
+        epService.getEPRuntime().sendEvent(event);
+
+    }
+    
+    public void handle(Test event) {
         epService.getEPRuntime().sendEvent(event);
 
     }

@@ -9,9 +9,6 @@ package Subscriber;
  *
  * @author Carlos
  */
-
-public interface StatementSubscriber {
-    
-     public String getStatement();
-     //todo
+public class FinSecuenciaSubscrber {
+    //todo
 }

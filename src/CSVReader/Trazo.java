@@ -25,7 +25,7 @@ public class Trazo
     private List<PuntoEvent> puntos;
     
     @Autowired
-    private  EPLUtils epl = new EPLUtils();
+    public static  EPLUtils epl = new EPLUtils();
 
     
     
@@ -35,11 +35,6 @@ public class Trazo
                 epl.afterPropertiesSet();
                 for (PuntoEvent event : puntos) {
                     epl.handle(event);
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                       
-                    }
                 }           
     }
     
@@ -87,6 +82,9 @@ public class Trazo
             }
             //se cierra el fichero
             br.close();
+            //put the flags
+            puntos.get(0).setFlag("fin");
+            puntos.get(puntos.size()-1).setFlag("inicio");
         } 
         catch (FileNotFoundException ex) 
         {
