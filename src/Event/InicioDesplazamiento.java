@@ -12,17 +12,22 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class DesplazamientoFin {
+public class InicioDesplazamiento extends Test implements InterfaceEvent{
+    /*
      private float longitud;
     private float latitud;
     private float speed;
     private Calendar time;
     private Date timestamp;
     private String flag;
+*/
+    public InicioDesplazamiento(PuntoEvent e) {
+        super(e);
+    }
 
 
-    
-    public DesplazamientoFin(PuntoEvent e) 
+    /*
+    public InicioDesplazamiento(PuntoEvent e) 
     {
         longitud = e.getLongitud();
         latitud = e.getLatitud();
@@ -127,4 +132,5 @@ public class DesplazamientoFin {
     {
         return "PuntoEvent ={ timestamp = \""+time.getTime()+"\", latitud = "+latitud+", longitud = "+longitud+",Speed = "+speed+" }";
     }
+*/
 }

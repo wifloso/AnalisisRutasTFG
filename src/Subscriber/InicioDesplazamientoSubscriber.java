@@ -5,6 +5,9 @@
  */
 package Subscriber;
 
+import CSVReader.Trazo;
+import Event.FinDesplazamiento;
+import Event.InicioDesplazamiento;
 import Event.PuntoEvent;
 import Event.Test;
 import java.util.Map;
@@ -18,14 +21,14 @@ public class InicioDesplazamientoSubscriber implements StatementSubscriber{
     
     @Override
     public String getStatement() {
-        return "select a2 " +
-                "from Test a2";
+        return "select a2 "
+                + " from pattern [every a1 = FinDesplazamiento -> a2 = PuntoEvent] ";
     } 
     
     
-    public void update(Map<String, Test> eventMap) {
+    public void update(Map<String, PuntoEvent> eventMap) {
         
-        Test event = (Test) eventMap.get("a2");
+        PuntoEvent event = (PuntoEvent) eventMap.get("a2");
         
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
@@ -36,5 +39,6 @@ public class InicioDesplazamientoSubscriber implements StatementSubscriber{
         sb.append("\n time = " + event.getTimestamp().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
+        Trazo.epl.handle(new InicioDesplazamiento(event));
     }
 }

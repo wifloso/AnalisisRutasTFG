@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class DesplazamientoInicio {
+public class FinDesplazamiento implements InterfaceEvent {
      private float longitud;
     private float latitud;
     private float speed;
@@ -22,7 +22,7 @@ public class DesplazamientoInicio {
 
 
     
-    public DesplazamientoInicio(PuntoEvent e) 
+    public FinDesplazamiento(PuntoEvent e) 
     {
         longitud = e.getLongitud();
         latitud = e.getLatitud();

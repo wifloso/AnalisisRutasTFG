@@ -5,6 +5,8 @@
  */
 package CSVReader;
 
+import Event.FinDesplazamiento;
+import Event.InicioDesplazamiento;
 import Event.PuntoEvent;
 import Event.Test;
 import Subscriber.*;
@@ -48,6 +50,19 @@ public class EPLUtils implements InitializingBean{
     @Qualifier("Test")
     private StatementSubscriber TestSubscriber;
     
+    
+    @Autowired
+    @Qualifier("InicioSecuenciaSubscriber")
+    private StatementSubscriber InicioSecuenciaSubscriber;
+    
+    @Autowired
+    @Qualifier("FinSecuenciaSubscriber")
+    private StatementSubscriber FinSecuenciaSubscriber;
+    
+    @Autowired
+    @Qualifier("DesplazamientoSubscriber")
+    private StatementSubscriber DesplazamientoSubscriber;
+    
         public void initService() {
 
         Configuration config = new Configuration();
@@ -59,9 +74,30 @@ public class EPLUtils implements InitializingBean{
         CreateFinDesplazamientoExpesion();
         CreateTestExpression();
         CreateInicioDesplazamientoExpression();
+        CreateInicioSecuenciaExpresion();
+        CreateFinSecuenciaExpresion();
+        CreateDesplazamientoExpresion();
+    
         
     }
+    private void CreateDesplazamientoExpresion(){
+        DesplazamientoSubscriber = new DesplazamientoSubscriber();
+        PuntoStatement = epService.getEPAdministrator().createEPL(DesplazamientoSubscriber.getStatement());
+        PuntoStatement.setSubscriber(DesplazamientoSubscriber);  
+    }
+        
+    private void CreateInicioSecuenciaExpresion() {
+        InicioSecuenciaSubscriber = new InicioSecuenciaSubscriber();
+        PuntoStatement = epService.getEPAdministrator().createEPL(InicioSecuenciaSubscriber.getStatement());
+        PuntoStatement.setSubscriber(InicioSecuenciaSubscriber);
+    }
 
+    private void CreateFinSecuenciaExpresion() {
+        FinSecuenciaSubscriber = new FinSecuenciaSubscriber();
+        PuntoStatement = epService.getEPAdministrator().createEPL(FinSecuenciaSubscriber.getStatement());
+        PuntoStatement.setSubscriber(FinSecuenciaSubscriber);
+    }
+        
     private void CreateTestExpression() {
         
         TestSubscriber = new TestSubscriber();
@@ -98,12 +134,18 @@ public class EPLUtils implements InitializingBean{
     
     public void handle(Test event) {
         epService.getEPRuntime().sendEvent(event);
-
     }
-
+    public void handle(FinDesplazamiento event) {
+        epService.getEPRuntime().sendEvent(event);
+    }
+    public void handle(InicioDesplazamiento event) {
+        epService.getEPRuntime().sendEvent(event);
+    }
     @Override
     public void afterPropertiesSet() {
         initService();
     }
+
+
     
 }

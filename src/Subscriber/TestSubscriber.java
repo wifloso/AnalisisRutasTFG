@@ -40,7 +40,7 @@ public class TestSubscriber implements StatementSubscriber{
         sb.append("\n time = " + event.getTimestamp().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
-        Trazo.epl.handle(new Test(event));
+        //Trazo.epl.handle(new Test(event));
     }
     
 }

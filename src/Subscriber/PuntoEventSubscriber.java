@@ -37,7 +37,7 @@ public class PuntoEventSubscriber implements StatementSubscriber{
         sb.append("\n speed = " + punto.getSpeed() );    
         sb.append("\n timestamp = " + punto.getTimestamp().toString() );  
         sb.append("\n---------------------------------");
-         System.out.println(sb);
+         //System.out.println(sb);
     }   
 
 }
