@@ -11,8 +11,7 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class PuntoEvent 
-{
+public class PuntoEvent {
     private float longitud;
     private float latitud;
     private float speed;
@@ -23,6 +22,17 @@ public class PuntoEvent
     public Date getTimestamp() {
         return timestamp;
     }
+    
+    public PuntoEvent(PuntoEvent e)  
+    {
+        longitud = e.getLongitud();
+        latitud = e.getLatitud();
+        speed = e.getSpeed();
+        time = e.getTime();
+        timestamp = e.getTimestamp();
+        flag = e.getFlag();
+    }
+    
     
     public PuntoEvent(float longitud, float latitud, float velocidad, String momento) 
     {

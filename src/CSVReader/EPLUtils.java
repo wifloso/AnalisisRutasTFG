@@ -7,6 +7,7 @@ package CSVReader;
 
 import Event.FinDesplazamiento;
 import Event.InicioDesplazamiento;
+import Event.InterfaceEvent;
 import Event.PuntoEvent;
 import Event.Test;
 import Subscriber.*;
@@ -105,8 +106,7 @@ public class EPLUtils implements InitializingBean{
         PuntoStatement.setSubscriber(TestSubscriber);
     }
         
-    private void CreateInicioDesplazamientoExpression() {
-        
+    private void CreateInicioDesplazamientoExpression() {        
         InicioDesplazamientoSubscriber = new InicioDesplazamientoSubscriber();
         PuntoStatement = epService.getEPAdministrator().createEPL(InicioDesplazamientoSubscriber.getStatement());
         PuntoStatement.setSubscriber(InicioDesplazamientoSubscriber);
@@ -132,15 +132,10 @@ public class EPLUtils implements InitializingBean{
 
     }
     
-    public void handle(Test event) {
+    public void handle(InterfaceEvent event) {
         epService.getEPRuntime().sendEvent(event);
     }
-    public void handle(FinDesplazamiento event) {
-        epService.getEPRuntime().sendEvent(event);
-    }
-    public void handle(InicioDesplazamiento event) {
-        epService.getEPRuntime().sendEvent(event);
-    }
+    
     @Override
     public void afterPropertiesSet() {
         initService();
