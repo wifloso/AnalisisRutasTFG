@@ -8,6 +8,8 @@ package analisis_rutas;
 import CSVReader.EPLUtils;
 import CSVReader.Trazo;
 import Event.PuntoEvent;
+import Map.Map;
+import static Map.Map.instance;
 import com.espertech.esper.client.*;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,13 @@ public class AnalisisRutas
         //t.difTime();
         //t.generateDataCEP();       
         t.startSendingCoodinates();
+        Map instance;
+        Coordinate bboxll = new Coordinate(-90.0, -180.0);
+        Coordinate bboxur = new Coordinate(90.0, 180.0);
+        instance = new Map(bboxll, bboxur,Trazo.coordenadasList);
+        instance.initChangeStream();
+        instance.setVisible(true);
+        
     }
     
 }

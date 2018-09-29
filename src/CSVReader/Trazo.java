@@ -6,6 +6,7 @@
 package CSVReader;
 
 import Event.PuntoEvent;
+import Map.CoordenadasList;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -26,7 +27,8 @@ public class Trazo
     
     @Autowired
     public static  EPLUtils epl = new EPLUtils();
-
+    
+    public static CoordenadasList coordenadasList = new CoordenadasList();
     
     
     public void startSendingCoodinates() {

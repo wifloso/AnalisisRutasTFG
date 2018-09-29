@@ -9,6 +9,7 @@ import CSVReader.Trazo;
 import Event.FinDesplazamiento;
 import Event.PuntoEvent;
 import Event.Test;
+import java.awt.Color;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +41,7 @@ public class FinDesplazamientoSubscriber  implements StatementSubscriber{
             sb.append("\n---------------------------------");
             System.out.println(sb);
             Trazo.epl.handle(new FinDesplazamiento(a1));
+            Trazo.coordenadasList.putEventMap(Color.red, a1.getLatitud(), a1.getLongitud());
     }
     
 }

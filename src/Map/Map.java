@@ -77,10 +77,12 @@ public class Map extends JFrame implements MapViewChangeListener,
         private Desktop desk;
         private boolean dloadRunning = false;
         private boolean redrawRunning = false;
+        public CoordenadasList Events;
         
-        public Map(Coordinate bboxll, Coordinate bboxur) {
+        public Map(Coordinate bboxll, Coordinate bboxur, CoordenadasList Events) {
                 GridBagLayout gbl = new GridBagLayout();
                 GridBagConstraints gbc = new GridBagConstraints();
+                this.Events = Events;
                 this.setTitle("LiveEditMapViewer");
                 this.setLayout(gbl);
                 this.bboxll = bboxll;
@@ -93,11 +95,7 @@ public class Map extends JFrame implements MapViewChangeListener,
                 DefaultMapController mapController = new DefaultMapController(map);
                 mapController.setMovementMouseButton(MouseEvent.BUTTON1);
                 map.setSize(800, 800);
-                map.addMapMarker(new MapMarkerDot(36.718267,-4.432112));
-                map.getMapPosition(new Coordinate(36.718267,-4.432112));
-                map.setZoom(6);
-                map.setDisplayPosition(7990, 6394, 6);
-                map.setZoom(13);
+                EditMap(Events);
                 setExtendedState(JFrame.MAXIMIZED_BOTH);
                 gbc.gridwidth = 1;
                 gbc.weighty = 1;
@@ -184,10 +182,6 @@ public class Map extends JFrame implements MapViewChangeListener,
                                                         g.drawString(nodeRate + "n/s", 20, getHeight() - 20);
                                                         g.drawString("(c) OpenStreetMap contributers, CC-BY-SA", getWidth() - 350, getHeight() - 20);
                                                 }
-                                                // long t2 = System.currentTimeMillis();
-                                                // System.out.println("Displaying " + noDisp +
-                                                // " nodes and " + noSkipped +
-                                                // " skipped. Calculated in " + (t2 - t1) + "ms");
                                         }
                                         repaint();
                                         currTime += 1000;
@@ -204,7 +198,19 @@ public class Map extends JFrame implements MapViewChangeListener,
                         }
                 }, 20000, 30000);
         }
-        private void initChangeStream() {
+        
+        private void EditMap(CoordenadasList Events){
+            for(MapMarkerDot Point: Events.getEventPos()){
+                 map.addMapMarker(Point);
+            }
+
+            map.getMapPosition(new Coordinate(36.718267,-4.432112));
+            map.setZoom(6);
+            map.setDisplayPosition(7990, 6394, 6);
+            map.setZoom(13);
+        }
+        
+        public void initChangeStream() {
                 try {
                         HttpURLConnection conn = (HttpURLConnection) new URL("http://planet.openstreetmap.org/redaction-period/minute-replicate/state.txt").openConnection();
                         conn.setRequestProperty("User-Agent", "LiveEditMapViewerJ-r28184");
@@ -392,7 +398,7 @@ public class Map extends JFrame implements MapViewChangeListener,
                                                 .println("You specified wrong coordinates. Will show all changes instead");
                         }
                 }
-                instance = new Map(bboxll, bboxur);
+                //instance = new Map(bboxll, bboxur);
                 instance.initChangeStream();
                 instance.setVisible(true);
         }

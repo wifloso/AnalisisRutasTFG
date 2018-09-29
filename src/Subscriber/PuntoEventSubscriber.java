@@ -5,7 +5,9 @@
  */
 package Subscriber;
 
+import CSVReader.Trazo;
 import Event.PuntoEvent;
+import java.awt.Color;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +39,8 @@ public class PuntoEventSubscriber implements StatementSubscriber{
         sb.append("\n speed = " + punto.getSpeed() );    
         sb.append("\n timestamp = " + punto.getTimestamp().toString() );  
         sb.append("\n---------------------------------");
-         //System.out.println(sb);
+        //System.out.println(sb);
+        Trazo.coordenadasList.putEventMap(Color.yellow, punto.getLatitud(), punto.getLongitud());
     }   
 
 }

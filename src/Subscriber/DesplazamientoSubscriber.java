@@ -47,7 +47,7 @@ public class DesplazamientoSubscriber  implements StatementSubscriber{
         sb.append("\n time_fin = " + fin.getTimestamp().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
-        //Trazo.epl.handle(new InicioDesplazamiento(event));
+        //Trazo.epl.handle(new Desplazamiento(event));
     }
     
     
