@@ -11,9 +11,9 @@ package Event;
  *
  * @author Carlos
  */
-public class InicioDesplazamiento extends Test implements InterfaceEvent{
+public class InicioDesplazamiento extends ComplexEvent implements InterfaceEvent{
 
-    public InicioDesplazamiento(PuntoEvent e) {
+    public InicioDesplazamiento(BasicEvent e) {
         super(e);
     }
 

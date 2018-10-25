@@ -12,6 +12,7 @@ package Subscriber;
 
 public interface StatementSubscriber {
     
-     public String getStatement();
+    
+    public String getStatement();
      //todo
 }

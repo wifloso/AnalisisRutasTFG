@@ -6,8 +6,8 @@
 package analisis_rutas;
 
 import CSVReader.EPLUtils;
-import CSVReader.Trazo;
-import Event.PuntoEvent;
+import CSVReader.CSVReader;
+import Event.BasicEvent;
 import Map.Map;
 import static Map.Map.instance;
 import com.espertech.esper.client.*;
@@ -48,7 +48,7 @@ public class AnalisisRutas
         }else{
             System.out.println("Lectura de "+entradaTeclado+"... \n");
         }
-        Trazo t = new Trazo(entradaTeclado); //ejemplo: campsa.scv
+        CSVReader t = new CSVReader(entradaTeclado); //ejemplo: campsa.scv
         //t.imprimir();
         //t.difTime();
         //t.generateDataCEP();       
@@ -56,7 +56,7 @@ public class AnalisisRutas
         Map instance;
         Coordinate bboxll = new Coordinate(-90.0, -180.0);
         Coordinate bboxur = new Coordinate(90.0, 180.0);
-        instance = new Map(bboxll, bboxur,Trazo.coordenadasList);
+        instance = new Map(bboxll, bboxur,CSVReader.coordenadasList);
         instance.initChangeStream();
         instance.setVisible(true);
         

@@ -5,10 +5,10 @@
  */
 package Subscriber;
 
-import CSVReader.Trazo;
+import CSVReader.CSVReader;
 import Event.FinDesplazamiento;
-import Event.PuntoEvent;
-import Event.Test;
+import Event.BasicEvent;
+import Event.ComplexEvent;
 import java.awt.Color;
 import java.util.Map;
 import org.springframework.stereotype.Component;
@@ -20,28 +20,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class FinDesplazamientoSubscriber  implements StatementSubscriber{
 
+    private final String  Rule = "select a1 " +
+               " from pattern [every a1 =   BasicEvent -> (timer:interval(150 seconds) and not a2 = BasicEvent)]";
+    
     @Override
     public String getStatement() {
-        return "select a1 " +
-               " from pattern [every a1 = PuntoEvent -> (timer:interval(150 seconds) and not a2 = PuntoEvent)]";
+        return Rule;
     }
     
-    public void update(Map<String, PuntoEvent> eventMap) {
+    public void update(Map<String, BasicEvent> eventMap) {
 
-            PuntoEvent a1 = (PuntoEvent) eventMap.get("a1");
-            PuntoEvent a2 = (PuntoEvent) eventMap.get("a2");
+            BasicEvent event = (BasicEvent) eventMap.get("a1");
+            BasicEvent a2 = (BasicEvent) eventMap.get("a2");
         
             StringBuilder sb = new StringBuilder();
             sb.append("---------------------------------");
             sb.append("\n- [Fin desplazamiento]: ");
-            sb.append("\n latitud = " + a1.getLatitud() );
-            sb.append("\n longitud = " + a1.getLongitud() );
-            sb.append("\n speed = " + a1.getSpeed() ); 
-            sb.append("\n time = " + a1.getTimestamp().toString());
+            sb.append("\n latitud = " + event.getLatitud() );
+            sb.append("\n longitud = " + event.getLongitud() );
+            sb.append("\n speed = " + event.getSpeed() ); 
+            sb.append("\n time = " + event.getTimestamp().toString());
             sb.append("\n---------------------------------");
             System.out.println(sb);
-            Trazo.epl.handle(new FinDesplazamiento(a1));
-            Trazo.coordenadasList.putEventMap(Color.red, a1.getLatitud(), a1.getLongitud());
+            CSVReader.epl.handle(new FinDesplazamiento(event));
+            //Trazo.coordenadasList.putEventMap(Color.RED, event.getLatitud(), event.getLongitud());
     }
     
 }

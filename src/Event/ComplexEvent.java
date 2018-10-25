@@ -12,8 +12,8 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class Test {
-     private float longitud;
+public class ComplexEvent {
+    private float longitud;
     private float latitud;
     private float speed;
     private Calendar time;
@@ -21,8 +21,17 @@ public class Test {
     private String flag;
 
 
+    public ComplexEvent(ComplexEvent e) 
+    {
+        longitud = e.getLongitud();
+        latitud = e.getLatitud();
+        speed = e.getSpeed();
+        time = e.getTime();
+        timestamp = e.getTimestamp();
+        flag = e.getFlag();
+    }
     
-    public Test(PuntoEvent e) 
+    public ComplexEvent(BasicEvent e) 
     {
         longitud = e.getLongitud();
         latitud = e.getLatitud();
@@ -66,6 +75,32 @@ public class Test {
     {
         return time.getTime();
     }
+
+    public void setLongitud(float longitud) {
+        this.longitud = longitud;
+    }
+
+    public void setLatitud(float latitud) {
+        this.latitud = latitud;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public void setTime(Calendar time) {
+        this.time = time;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+    
+    
     
     public int getMonth(String s)
     {

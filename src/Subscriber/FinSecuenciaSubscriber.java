@@ -5,9 +5,10 @@
  */
 package Subscriber;
 
-import CSVReader.Trazo;
+import CSVReader.CSVReader;
 import Event.FinDesplazamiento;
-import Event.PuntoEvent;
+import Event.BasicEvent;
+import java.awt.Color;
 import java.util.Map;
 
 /**
@@ -16,25 +17,28 @@ import java.util.Map;
  */
 public class FinSecuenciaSubscriber implements StatementSubscriber{
     
+    private final String  Rule = "select a1 " +
+               " from BasicEvent as a1 where flag = \"fin\" ";
+    
     @Override
     public String getStatement() {
-        return "select a1 " +
-               " from PuntoEvent as a1 where flag = \"fin\" ";
+        return Rule;
     }
     
-    public void update(Map<String, PuntoEvent> eventMap) {
+    public void update(Map<String, BasicEvent> eventMap) {
 
-            PuntoEvent a1 = (PuntoEvent) eventMap.get("a1");
+            BasicEvent event = (BasicEvent) eventMap.get("a1");
         
             StringBuilder sb = new StringBuilder();
             sb.append("---------------------------------");
             sb.append("\n- [Fin Secuencia]: ");
-            sb.append("\n latitud = " + a1.getLatitud() );
-            sb.append("\n longitud = " + a1.getLongitud() );
-            sb.append("\n speed = " + a1.getSpeed() ); 
-            sb.append("\n time = " + a1.getTimestamp().toString());
+            sb.append("\n latitud = " + event.getLatitud() );
+            sb.append("\n longitud = " + event.getLongitud() );
+            sb.append("\n speed = " + event.getSpeed() ); 
+            sb.append("\n time = " + event.getTimestamp().toString());
             sb.append("\n---------------------------------");
             System.out.println(sb);
-            Trazo.epl.handle(new FinDesplazamiento(a1));
+            CSVReader.epl.handle(new FinDesplazamiento(event));
+            //Trazo.coordenadasList.putEventMap(Color.RED, event.getLatitud(), event.getLongitud());
     }
 }

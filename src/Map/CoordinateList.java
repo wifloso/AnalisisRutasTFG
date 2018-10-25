@@ -14,10 +14,10 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
  *
  * @author Carlos
  */
-public class CoordenadasList {
+public class CoordinateList {
     List<MapMarkerDot> EventMap;
     
-    public CoordenadasList(){
+    public CoordinateList(){
          EventMap = new  ArrayList<MapMarkerDot>();
     }
 

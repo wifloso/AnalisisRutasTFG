@@ -5,11 +5,12 @@
  */
 package Subscriber;
 
-import CSVReader.Trazo;
+import CSVReader.CSVReader;
 import Event.FinDesplazamiento;
 import Event.InicioDesplazamiento;
-import Event.PuntoEvent;
-import Event.Test;
+import Event.BasicEvent;
+import Event.ComplexEvent;
+import java.awt.Color;
 import java.util.Map;
 
 /**
@@ -18,17 +19,18 @@ import java.util.Map;
  */
 public class InicioDesplazamientoSubscriber implements StatementSubscriber{
     
+    private final String  Rule = "select a2 "
+                + " from pattern [every a1 = FinDesplazamiento -> a2 = BasicEvent] ";
     
     @Override
     public String getStatement() {
-        return "select a2 "
-                + " from pattern [every a1 = FinDesplazamiento -> a2 = PuntoEvent] ";
+        return Rule;
     } 
     
     
-    public void update(Map<String, PuntoEvent> eventMap) {
+    public void update(Map<String, BasicEvent> eventMap) {
         
-        PuntoEvent event = (PuntoEvent) eventMap.get("a2");
+        BasicEvent event = (BasicEvent) eventMap.get("a2");
         
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
@@ -39,6 +41,7 @@ public class InicioDesplazamientoSubscriber implements StatementSubscriber{
         sb.append("\n time = " + event.getTimestamp().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
-        Trazo.epl.handle(new InicioDesplazamiento(event));
+        CSVReader.epl.handle(new InicioDesplazamiento(event));
+        //Trazo.coordenadasList.putEventMap(Color.GREEN, event.getLatitud(), event.getLongitud());
     }
 }

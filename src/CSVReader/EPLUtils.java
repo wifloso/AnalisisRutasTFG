@@ -8,8 +8,8 @@ package CSVReader;
 import Event.FinDesplazamiento;
 import Event.InicioDesplazamiento;
 import Event.InterfaceEvent;
-import Event.PuntoEvent;
-import Event.Test;
+import Event.BasicEvent;
+import Event.ComplexEvent;
 import Subscriber.*;
 import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPServiceProvider;
@@ -33,11 +33,11 @@ public class EPLUtils implements InitializingBean{
     
       
     private EPServiceProvider epService;
-    private EPStatement PuntoStatement;
+    private EPStatement Statement;
     
     @Autowired
-    @Qualifier("PuntoEvent")
-    private StatementSubscriber PuntoEventSubscriber;
+    @Qualifier("Basic")
+    private StatementSubscriber BasicEventSubscriber;
     
     @Autowired
     @Qualifier("FinDesplazamiento")
@@ -64,6 +64,10 @@ public class EPLUtils implements InitializingBean{
     @Qualifier("DesplazamientoSubscriber")
     private StatementSubscriber DesplazamientoSubscriber;
     
+    @Autowired
+    @Qualifier("DesplazamientoTrustlySubscriber")
+    private StatementSubscriber DesplazamientoTrustlySubscriber;
+    
         public void initService() {
 
         Configuration config = new Configuration();
@@ -71,61 +75,70 @@ public class EPLUtils implements InitializingBean{
         config.addEventTypeAutoName("Event");
         epService = EPServiceProviderManager.getDefaultProvider(config);
 
-        CreatePuntoEventExpression();
+        CreateBasicEventExpression();
         CreateFinDesplazamientoExpesion();
         CreateTestExpression();
         CreateInicioDesplazamientoExpression();
         CreateInicioSecuenciaExpresion();
         CreateFinSecuenciaExpresion();
         CreateDesplazamientoExpresion();
-    
+        CreateDesplazamientoTrustlyExpresion();
         
     }
+        
+        
+    private void CreateDesplazamientoTrustlyExpresion(){
+        DesplazamientoTrustlySubscriber = new DesplazamientoTrustlySubscriber();
+        Statement = epService.getEPAdministrator().createEPL(DesplazamientoTrustlySubscriber.getStatement());
+        Statement.setSubscriber(DesplazamientoTrustlySubscriber);  
+    }
+                
+                
     private void CreateDesplazamientoExpresion(){
         DesplazamientoSubscriber = new DesplazamientoSubscriber();
-        PuntoStatement = epService.getEPAdministrator().createEPL(DesplazamientoSubscriber.getStatement());
-        PuntoStatement.setSubscriber(DesplazamientoSubscriber);  
+        Statement = epService.getEPAdministrator().createEPL(DesplazamientoSubscriber.getStatement());
+        Statement.setSubscriber(DesplazamientoSubscriber);  
     }
         
     private void CreateInicioSecuenciaExpresion() {
         InicioSecuenciaSubscriber = new InicioSecuenciaSubscriber();
-        PuntoStatement = epService.getEPAdministrator().createEPL(InicioSecuenciaSubscriber.getStatement());
-        PuntoStatement.setSubscriber(InicioSecuenciaSubscriber);
+        Statement = epService.getEPAdministrator().createEPL(InicioSecuenciaSubscriber.getStatement());
+        Statement.setSubscriber(InicioSecuenciaSubscriber);
     }
 
     private void CreateFinSecuenciaExpresion() {
         FinSecuenciaSubscriber = new FinSecuenciaSubscriber();
-        PuntoStatement = epService.getEPAdministrator().createEPL(FinSecuenciaSubscriber.getStatement());
-        PuntoStatement.setSubscriber(FinSecuenciaSubscriber);
+        Statement = epService.getEPAdministrator().createEPL(FinSecuenciaSubscriber.getStatement());
+        Statement.setSubscriber(FinSecuenciaSubscriber);
     }
         
     private void CreateTestExpression() {
         
         TestSubscriber = new TestSubscriber();
-        PuntoStatement = epService.getEPAdministrator().createEPL(TestSubscriber.getStatement());
-        PuntoStatement.setSubscriber(TestSubscriber);
+        Statement = epService.getEPAdministrator().createEPL(TestSubscriber.getStatement());
+        Statement.setSubscriber(TestSubscriber);
     }
         
     private void CreateInicioDesplazamientoExpression() {        
         InicioDesplazamientoSubscriber = new InicioDesplazamientoSubscriber();
-        PuntoStatement = epService.getEPAdministrator().createEPL(InicioDesplazamientoSubscriber.getStatement());
-        PuntoStatement.setSubscriber(InicioDesplazamientoSubscriber);
+        Statement = epService.getEPAdministrator().createEPL(InicioDesplazamientoSubscriber.getStatement());
+        Statement.setSubscriber(InicioDesplazamientoSubscriber);
     }    
         
-    private void CreatePuntoEventExpression() {
+    private void CreateBasicEventExpression() {
         
-        PuntoEventSubscriber = new PuntoEventSubscriber();
-        PuntoStatement = epService.getEPAdministrator().createEPL(PuntoEventSubscriber.getStatement());
-        PuntoStatement.setSubscriber(PuntoEventSubscriber);
+        BasicEventSubscriber = new BasicEventSubscriber();
+        Statement = epService.getEPAdministrator().createEPL(BasicEventSubscriber.getStatement());
+        Statement.setSubscriber(BasicEventSubscriber);
     }
     
     private void CreateFinDesplazamientoExpesion(){
         FinDesplazamientoSubscriber = new FinDesplazamientoSubscriber();
-        PuntoStatement = epService.getEPAdministrator().createEPL(FinDesplazamientoSubscriber.getStatement());
-        PuntoStatement.setSubscriber(FinDesplazamientoSubscriber);
+        Statement = epService.getEPAdministrator().createEPL(FinDesplazamientoSubscriber.getStatement());
+        Statement.setSubscriber(FinDesplazamientoSubscriber);
     }
     
-    public void handle(PuntoEvent event) {
+    public void handle(BasicEvent event) {
         //CurrentTimeEvent
         epService.getEPRuntime().sendEvent(new CurrentTimeEvent(event.getDateTime().getTime()));
         epService.getEPRuntime().sendEvent(event);

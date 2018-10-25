@@ -6,9 +6,9 @@
 package Subscriber;
 
 import CSVReader.EPLUtils;
-import CSVReader.Trazo;
-import Event.PuntoEvent;
-import Event.Test;
+import CSVReader.CSVReader;
+import Event.BasicEvent;
+import Event.ComplexEvent;
 import java.util.Map;
 
 /**
@@ -17,17 +17,18 @@ import java.util.Map;
  */
 public class TestSubscriber implements StatementSubscriber{
     
+    private final String  Rule = "select a1 "
+                + " from BasicEvent as a1 where flag = \"inicio\" ";
     
     @Override
     public String getStatement() {
-        return "select a1 "
-                + " from PuntoEvent as a1 where flag = \"inicio\" ";
+        return Rule;
     }
     
     
-    public void update(Map<String, PuntoEvent> eventMap) {
+    public void update(Map<String, BasicEvent> eventMap) {
         
-        PuntoEvent event = (PuntoEvent) eventMap.get("a1");
+        BasicEvent event = (BasicEvent) eventMap.get("a1");
         
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
@@ -40,7 +41,7 @@ public class TestSubscriber implements StatementSubscriber{
         sb.append("\n time = " + event.getTimestamp().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
-        //Trazo.epl.handle(new Test(event));
+        //Trazo.epl.handle(new ComplexEvent(event));
     }
     
 }

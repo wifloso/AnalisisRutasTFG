@@ -5,8 +5,8 @@
  */
 package CSVReader;
 
-import Event.PuntoEvent;
-import Map.CoordenadasList;
+import Event.BasicEvent;
+import Map.CoordinateList;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,33 +21,33 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Carlos
  */
-public class Trazo 
+public class CSVReader 
 {
-    private List<PuntoEvent> puntos;
+    private List<BasicEvent> puntos;
     
     @Autowired
     public static  EPLUtils epl = new EPLUtils();
     
-    public static CoordenadasList coordenadasList = new CoordenadasList();
+    public static CoordinateList coordenadasList = new CoordinateList();
     
     
     public void startSendingCoodinates() {
 
 
                 epl.afterPropertiesSet();
-                for (PuntoEvent event : puntos) {
+                for (BasicEvent event : puntos) {
                     epl.handle(event);
                 }           
     }
     
-    public Trazo(String archivo) 
+    public CSVReader(String archivo) 
     {
-        puntos = new ArrayList<PuntoEvent>();
+        puntos = new ArrayList<BasicEvent>();
         reedRutine(archivo);
         changeOrder();
     }
 
-    public List<PuntoEvent> getPuntos() 
+    public List<BasicEvent> getPuntos() 
     {
         return puntos;
     }
@@ -67,7 +67,7 @@ public class Trazo
             float latitud;
             float velocidad;
             String dia;  
-            PuntoEvent p;
+            BasicEvent p;
             //lectura del fichero
             while( line != null )
             {
@@ -77,7 +77,7 @@ public class Trazo
                 velocidad= Float.parseFloat(fields[2]);
                 dia = fields[3];
                 //creamos un nuevo punto y lo guardamos en una lista
-                p = new PuntoEvent(longitud,latitud,velocidad,dia);
+                p = new BasicEvent(longitud,latitud,velocidad,dia);
                 puntos.add(p);
                 //siguiente linea;
                 line = br.readLine();
@@ -91,11 +91,11 @@ public class Trazo
         catch (FileNotFoundException ex) 
         {
             System.out.println("El fichero \""+archivo+"\"sa no existe");
-            Logger.getLogger(Trazo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CSVReader.class.getName()).log(Level.SEVERE, null, ex);
         } 
         catch (IOException ex) 
         {
-            Logger.getLogger(Trazo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CSVReader.class.getName()).log(Level.SEVERE, null, ex);
         }   
     }
     
@@ -103,7 +103,7 @@ public class Trazo
     public void imprimir()
     {
         int i = 0;
-        for( PuntoEvent p: puntos )
+        for( BasicEvent p: puntos )
         {
             i++;
             System.out.println( i + p.toString() );
@@ -115,8 +115,8 @@ public class Trazo
     {
         int i = 0;
         String s;
-        PuntoEvent p = null;
-        for( PuntoEvent d: puntos )
+        BasicEvent p = null;
+        for( BasicEvent d: puntos )
         {
             if(i==0){
                 i++;
@@ -136,8 +136,8 @@ public class Trazo
         int i = 0;
         String s;
         long time;
-        PuntoEvent p = null;
-        for( PuntoEvent d: puntos ){
+        BasicEvent p = null;
+        for( BasicEvent d: puntos ){
             if(i==0){
                 i++;
                 p = d;
@@ -154,7 +154,7 @@ public class Trazo
 
     private void changeOrder() 
     {   
-        List<PuntoEvent> help = new ArrayList<PuntoEvent>();
+        List<BasicEvent> help = new ArrayList<BasicEvent>();
         help.addAll(puntos);
         for(int i=0; i<puntos.size(); i++){
             puntos.set(i, help.get(puntos.size()-i-1));

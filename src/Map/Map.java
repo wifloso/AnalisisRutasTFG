@@ -77,9 +77,9 @@ public class Map extends JFrame implements MapViewChangeListener,
         private Desktop desk;
         private boolean dloadRunning = false;
         private boolean redrawRunning = false;
-        public CoordenadasList Events;
+        public CoordinateList Events;
         
-        public Map(Coordinate bboxll, Coordinate bboxur, CoordenadasList Events) {
+        public Map(Coordinate bboxll, Coordinate bboxur, CoordinateList Events) {
                 GridBagLayout gbl = new GridBagLayout();
                 GridBagConstraints gbc = new GridBagConstraints();
                 this.Events = Events;
@@ -199,7 +199,7 @@ public class Map extends JFrame implements MapViewChangeListener,
                 }, 20000, 30000);
         }
         
-        private void EditMap(CoordenadasList Events){
+        private void EditMap(CoordinateList Events){
             for(MapMarkerDot Point: Events.getEventPos()){
                  map.addMapMarker(Point);
             }
@@ -384,24 +384,7 @@ public class Map extends JFrame implements MapViewChangeListener,
                 }
                 points = null;
         }
-        public static void main(String[] args) {
-                Coordinate bboxll = new Coordinate(-90.0, -180.0);
-                Coordinate bboxur = new Coordinate(90.0, 180.0);
-                if (args.length == 4) {
-                        try {
-                                bboxll = new Coordinate(Double.parseDouble(args[1]), Double
-                                                .parseDouble(args[0]));
-                                bboxur = new Coordinate(Double.parseDouble(args[3]), Double
-                                                .parseDouble(args[2]));
-                        } catch (NumberFormatException nfe) {
-                                System.out
-                                                .println("You specified wrong coordinates. Will show all changes instead");
-                        }
-                }
-                //instance = new Map(bboxll, bboxur);
-                instance.initChangeStream();
-                instance.setVisible(true);
-        }
+
         public void mapViewChanged() {
                 setupDrawArray();
                 repaint();

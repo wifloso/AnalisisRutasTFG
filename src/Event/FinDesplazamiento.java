@@ -10,9 +10,9 @@ package Event;
  *
  * @author Carlos
  */
-public class FinDesplazamiento extends Test implements InterfaceEvent {
+public class FinDesplazamiento extends ComplexEvent implements InterfaceEvent {
          
-    public FinDesplazamiento(PuntoEvent e) {
+    public FinDesplazamiento(BasicEvent e) {
         super(e);
     }
 }

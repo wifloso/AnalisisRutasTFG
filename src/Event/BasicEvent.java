@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class PuntoEvent {
+public class BasicEvent {
     private float longitud;
     private float latitud;
     private float speed;
@@ -23,7 +23,7 @@ public class PuntoEvent {
         return timestamp;
     }
     
-    public PuntoEvent(PuntoEvent e)  
+    public BasicEvent(BasicEvent e)  
     {
         longitud = e.getLongitud();
         latitud = e.getLatitud();
@@ -34,7 +34,8 @@ public class PuntoEvent {
     }
     
     
-    public PuntoEvent(float longitud, float latitud, float velocidad, String momento) 
+    
+    public BasicEvent(float longitud, float latitud, float velocidad, String momento) 
     {
         this.longitud = longitud;
         this.latitud = latitud;
