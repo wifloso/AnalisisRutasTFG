@@ -68,6 +68,11 @@ public class EPLUtils implements InitializingBean{
     @Qualifier("DesplazamientoTrustlySubscriber")
     private StatementSubscriber DesplazamientoTrustlySubscriber;
     
+    
+    @Autowired
+    @Qualifier("CambioDireccionSubscriber")
+    private StatementSubscriber CambioDireccionSubscriber;
+    
         public void initService() {
 
         Configuration config = new Configuration();
@@ -83,9 +88,14 @@ public class EPLUtils implements InitializingBean{
         CreateFinSecuenciaExpresion();
         CreateDesplazamientoExpresion();
         CreateDesplazamientoTrustlyExpresion();
-        
+        CambioDireccionExpresion();
     }
-        
+       
+    private void CambioDireccionExpresion(){
+        CambioDireccionSubscriber = new CambioDireccionSubscriber();
+        Statement = epService.getEPAdministrator().createEPL(CambioDireccionSubscriber.getStatement());
+        Statement.setSubscriber(CambioDireccionSubscriber);        
+    }    
         
     private void CreateDesplazamientoTrustlyExpresion(){
         DesplazamientoTrustlySubscriber = new DesplazamientoTrustlySubscriber();

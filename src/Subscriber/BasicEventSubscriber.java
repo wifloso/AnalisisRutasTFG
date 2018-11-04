@@ -40,10 +40,11 @@ public class BasicEventSubscriber implements StatementSubscriber{
         sb.append("\n timestamp = " + event.getTimestamp().toString() );  
         sb.append("\n---------------------------------");
         //System.out.println(sb);
+        
         if(event.getSpeed() < 3){
-            CSVReader.coordenadasList.putEventMap(Color.cyan, event.getLatitud(), event.getLongitud());
-        }else if(event.getSpeed() >= 3 && event.getSpeed() < 6){
             CSVReader.coordenadasList.putEventMap(Color.yellow, event.getLatitud(), event.getLongitud());
+        }else if(event.getSpeed() >= 3 && event.getSpeed() < 6){
+            CSVReader.coordenadasList.putEventMap(Color.orange, event.getLatitud(), event.getLongitud());
         }else if(event.getSpeed() >= 6 && event.getSpeed() < 100){
             CSVReader.coordenadasList.putEventMap(Color.red, event.getLatitud(), event.getLongitud());
         }

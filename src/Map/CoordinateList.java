@@ -8,6 +8,7 @@ package Map;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import org.openstreetmap.gui.jmapviewer.Layer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 
 /**
@@ -26,7 +27,9 @@ public class CoordinateList {
     }
     
     public void putEventMap(Color color,double latitud,double longitud){
-        EventMap.add(new MapMarkerDot(color, latitud, longitud));
+        MapMarkerDot a = new MapMarkerDot(Color.BLACK, latitud, longitud);
+        a.setBackColor(color);
+        EventMap.add(a);
     }
     
 }

@@ -8,7 +8,10 @@ package Subscriber;
 import CSVReader.EPLUtils;
 import CSVReader.CSVReader;
 import Event.BasicEvent;
+import Event.CambioDireccionEvent;
 import Event.ComplexEvent;
+import Event.FinDesplazamiento;
+import java.awt.Color;
 import java.util.Map;
 
 /**
@@ -17,8 +20,8 @@ import java.util.Map;
  */
 public class TestSubscriber implements StatementSubscriber{
     
-    private final String  Rule = "select a1 "
-                + " from BasicEvent as a1 where flag = \"inicio\" ";
+    private final String  Rule = "select a1, a2 " 
+                + "from pattern [ every (a1 = CambioDireccionEvent -> a2 = CambioDireccionEvent) ]  ";
     
     @Override
     public String getStatement() {
@@ -26,22 +29,28 @@ public class TestSubscriber implements StatementSubscriber{
     }
     
     
-    public void update(Map<String, BasicEvent> eventMap) {
+    public void update(Map<String, CambioDireccionEvent> eventMap) {
         
-        BasicEvent event = (BasicEvent) eventMap.get("a1");
-        
+        CambioDireccionEvent a1 = (CambioDireccionEvent) eventMap.get("a1");
+        CambioDireccionEvent a2 = (CambioDireccionEvent) eventMap.get("a2");
+        boolean hayCambio = Math.abs(a1.getCambio()-a2.getCambio())>Math.PI/4;
         StringBuilder sb = new StringBuilder();
-        sb.append("---------------------------------");
-        sb.append("\n- [Test]: ");
-        sb.append("\n- [Test]: ");
-        sb.append("\n- [Test]: ");
-        sb.append("\n latitud = " + event.getLatitud());
-        sb.append("\n longitud = " + event.getLongitud());
-        sb.append("\n speed = " + event.getSpeed()); 
-        sb.append("\n time = " + event.getTimestamp().toString());
-        sb.append("\n---------------------------------");
-        System.out.println(sb);
-        //Trazo.epl.handle(new ComplexEvent(event));
+        sb.append("\n- [Cambio de direccion]: ");
+        sb.append("\n- [Cambio de direccion]: ");
+        sb.append("\n- Coordenadas de cambio... ");
+        sb.append("\n- Latitud = " + a2.getLatitud() );
+        sb.append("\n- Longitud = " + a2.getLongitud() );
+        sb.append("\n- Tiempo = " + a2.getTimestamp().toString());
+        sb.append("\n- Pi = " + Math.PI/2);
+        sb.append("\n- Tiene que ser mayor = " + Math.abs(a1.getCambio()-a2.getCambio()));
+
+        
+        if(hayCambio){
+            System.out.println(sb);
+            CSVReader.coordenadasList.putEventMap(Color.green, a1.getLatitud(), a1.getLongitud());
+        }
+        
+        
     }
     
 }

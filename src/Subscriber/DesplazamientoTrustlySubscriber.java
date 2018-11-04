@@ -50,7 +50,7 @@ public class DesplazamientoTrustlySubscriber implements StatementSubscriber{
         sb.append("\n time_fin = " + event.getTimestamp2().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
-        
+        //todo: named window to speed analysis
         CSVReader.coordenadasList.putEventMap(Color.WHITE, event.getLatitud(), event.getLongitud());
         CSVReader.coordenadasList.putEventMap(Color.BLACK, event.getLatitud2(), event.getLongitud2());
         
