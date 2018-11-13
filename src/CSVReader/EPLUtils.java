@@ -63,11 +63,14 @@ public class EPLUtils implements InitializingBean{
     @Autowired
     @Qualifier("DesplazamientoSubscriber")
     private StatementSubscriber DesplazamientoSubscriber;
-    
+       
     @Autowired
     @Qualifier("DesplazamientoTrustlySubscriber")
     private StatementSubscriber DesplazamientoTrustlySubscriber;
     
+    @Autowired
+    @Qualifier("IncrementoDireccciónSubcriber")
+    private StatementSubscriber IncrementoDireccciónSubcriber;
     
     @Autowired
     @Qualifier("CambioDireccionSubscriber")
@@ -89,8 +92,14 @@ public class EPLUtils implements InitializingBean{
         CreateDesplazamientoExpresion();
         CreateDesplazamientoTrustlyExpresion();
         CambioDireccionExpresion();
+        IncrementoDireccciónExpresion();
     }
-       
+    private void IncrementoDireccciónExpresion(){
+        IncrementoDireccciónSubcriber = new IncrementoDireccciónSubcriber();
+        Statement = epService.getEPAdministrator().createEPL(IncrementoDireccciónSubcriber.getStatement());
+        Statement.setSubscriber(IncrementoDireccciónSubcriber);  
+    }
+
     private void CambioDireccionExpresion(){
         CambioDireccionSubscriber = new CambioDireccionSubscriber();
         Statement = epService.getEPAdministrator().createEPL(CambioDireccionSubscriber.getStatement());
@@ -122,8 +131,7 @@ public class EPLUtils implements InitializingBean{
         Statement.setSubscriber(FinSecuenciaSubscriber);
     }
         
-    private void CreateTestExpression() {
-        
+    private void CreateTestExpression(){
         TestSubscriber = new TestSubscriber();
         Statement = epService.getEPAdministrator().createEPL(TestSubscriber.getStatement());
         Statement.setSubscriber(TestSubscriber);
@@ -156,6 +164,7 @@ public class EPLUtils implements InitializingBean{
     }
     
     public void handle(InterfaceEvent event) {
+        epService.getEPRuntime().sendEvent(new CurrentTimeEvent(event.getDateTime().getTime()));
         epService.getEPRuntime().sendEvent(event);
     }
     

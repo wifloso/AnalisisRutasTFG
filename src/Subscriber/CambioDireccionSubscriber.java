@@ -5,19 +5,23 @@
  */
 package Subscriber;
 
+import CSVReader.EPLUtils;
 import CSVReader.CSVReader;
 import Event.BasicEvent;
-import Event.CambioDireccionEvent;
+import Event.IncrementoDireccionEvent;
+import Event.ComplexEvent;
+import Event.FinDesplazamiento;
+import java.awt.Color;
 import java.util.Map;
 
 /**
  *
- * @author Carlos
+ * @author CarlosAA
  */
 public class CambioDireccionSubscriber implements StatementSubscriber{
     
     private final String  Rule = "select a1, a2 " 
-                + "from pattern [ every (a1 = BasicEvent -> a2 = BasicEvent) ]  ";
+                + "from pattern [ every (a1 = IncrementoDireccionEvent -> a2 = IncrementoDireccionEvent) ]  ";
     
     @Override
     public String getStatement() {
@@ -25,23 +29,43 @@ public class CambioDireccionSubscriber implements StatementSubscriber{
     }
     
     
-    public void update(Map<String, BasicEvent> eventMap) {
+    public void update(Map<String, IncrementoDireccionEvent> eventMap) {
         
-        BasicEvent a1 = (BasicEvent) eventMap.get("a1");
-        BasicEvent a2 = (BasicEvent) eventMap.get("a2");
+        IncrementoDireccionEvent a1 = (IncrementoDireccionEvent) eventMap.get("a1");
+        IncrementoDireccionEvent a2 = (IncrementoDireccionEvent) eventMap.get("a2");
+        float angulo,a,b;
+        if(true){
+            angulo = (float) Math.acos( a1.getCambio().x*a2.getCambio().x+a1.getCambio().y*a2.getCambio().y );
         
-        float a = (a1.getLatitud()-a2.getLatitud())*11111;
-        float b = (a1.getLongitud()-a2.getLongitud());
-        b = (float) Math.cos(a2.getLatitud()*Math.PI/180)*b*11111  ;
-        float c = (float) Math.atan2(b, a);
+        }else{
+            a = (float) Math.atan2(a1.getCambio().x,a1.getCambio().x);
+            b = (float) Math.atan2(a2.getCambio().x,a2.getCambio().x);
+            angulo = Math.abs(a-b);
+            
+        }
+        
+        boolean hayCambio = Math.abs(angulo)  >  Math.PI/5;
+        
         
         StringBuilder sb = new StringBuilder();
         sb.append("\n- [Cambio de direccion]: ");
-        sb.append("\n Incremento de latitud en metros entre dos puntos consecutivos = " + a);
-        sb.append("\n Incremento de longitud en metros entre dos puntos consecutivos = " + b);
-        sb.append("\n Presenta una discontinuidad en la dirección Oeste = " + c); 
-        System.out.println(sb);
-        CSVReader.epl.handle(new CambioDireccionEvent(a1,c));
+        sb.append("\n- [Cambio de direccion]: ");
+        sb.append("\n- Coordenadas de cambio... ");
+        sb.append("\n- Latitud = " + a2.getLatitud() );
+        sb.append("\n- Longitud = " + a2.getLongitud() );
+        sb.append("\n- Tiempo = " + a2.getTimestamp().toString());
+        sb.append("\n- Pi = " + Math.PI/4);
+        sb.append("\n- Tiene que ser mayor = " + angulo);
+
+        
+        if(hayCambio){
+            System.out.println(sb);
+            CSVReader.coordenadasList.putEventMap(Color.green, a2.getLatitud(), a2.getLongitud());
+        }
+        
+        
     }
     
 }
+
+

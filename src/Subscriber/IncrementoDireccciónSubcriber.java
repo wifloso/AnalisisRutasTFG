@@ -5,24 +5,21 @@
  */
 package Subscriber;
 
-import CSVReader.EPLUtils;
 import CSVReader.CSVReader;
 import Event.BasicEvent;
 import Event.IncrementoDireccionEvent;
-import Event.ComplexEvent;
-import Event.FinDesplazamiento;
+import com.sun.javafx.geom.Vec2d;
 import com.sun.javafx.geom.Vec2f;
-import java.awt.Color;
 import java.util.Map;
 
 /**
  *
- * @author CarlosAA
+ * @author Carlos
  */
-public class TestSubscriber implements StatementSubscriber{
+public class IncrementoDireccciónSubcriber implements StatementSubscriber{
     
-     private final String  Rule = "select a1, a2 " 
-                + "from pattern [ every a1 = BasicEvent -> a2 = BasicEvent ]";
+    private final String  Rule = "select a1, a2 " 
+                + "from pattern [ every a1 = BasicEvent ->  a2 = BasicEvent ]";
     
     @Override
     public String getStatement() {
@@ -48,10 +45,10 @@ public class TestSubscriber implements StatementSubscriber{
         
         StringBuilder sb = new StringBuilder();
         sb.append("\n- [Incremento en]: ");
-        sb.append("\n direccion latitud = " + a/c);
-        sb.append("\n direccion longitud  = " + b/c);
+        sb.append("\n direccion latitud = " + a);
+        sb.append("\n direccion longitud  = " + b);
         System.out.println(sb);
-        //CSVReader.epl.handle(new IncrementoDireccionEvent(a2,result));
+        CSVReader.epl.handle(new IncrementoDireccionEvent(a1,result));
     }
     
 }

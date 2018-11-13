@@ -5,20 +5,22 @@
  */
 package Event;
 
+import com.sun.javafx.geom.Vec2f;
+
 /**
  *
  * @author Carlos
  */
-public class CambioDireccionEvent  extends ComplexEvent implements InterfaceEvent {
+public class IncrementoDireccionEvent  extends ComplexEvent implements InterfaceEvent {
     
-    float cambio;
+    Vec2f cambio;
     
-    public CambioDireccionEvent(BasicEvent e,float cambio) {
+    public IncrementoDireccionEvent(BasicEvent e,Vec2f cambio) {
         super(e);
         this.cambio = cambio;
     }
 
-    public float getCambio() {
+    public Vec2f getCambio() {
         return cambio;
     }
     
