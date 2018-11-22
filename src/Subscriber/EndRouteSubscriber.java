@@ -6,7 +6,7 @@
 package Subscriber;
 
 import CSVReader.CSVReader;
-import Event.FinDesplazamiento;
+import Event.EndRouteEvent;
 import Event.BasicEvent;
 import Event.ComplexEvent;
 import java.awt.Color;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @author Carlos
  */
 @Component
-public class FinDesplazamientoSubscriber  implements StatementSubscriber{
+public class EndRouteSubscriber  implements StatementSubscriber{
 
     private final String  Rule = "select a1 " +
                " from pattern [every a1 =   BasicEvent -> (timer:interval(150 seconds) and not a2 = BasicEvent)]";
@@ -42,7 +42,7 @@ public class FinDesplazamientoSubscriber  implements StatementSubscriber{
             sb.append("\n time = " + event.getTimestamp().toString());
             sb.append("\n---------------------------------");
             System.out.println(sb);
-            CSVReader.epl.handle(new FinDesplazamiento(event));
+            CSVReader.epl.handle(new EndRouteEvent(event));
             //Trazo.coordenadasList.putEventMap(Color.RED, event.getLatitud(), event.getLongitud());
     }
     

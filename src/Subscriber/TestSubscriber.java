@@ -8,9 +8,9 @@ package Subscriber;
 import CSVReader.EPLUtils;
 import CSVReader.CSVReader;
 import Event.BasicEvent;
-import Event.IncrementoDireccionEvent;
+import Event.DirectionEvent;
 import Event.ComplexEvent;
-import Event.FinDesplazamiento;
+import Event.EndRouteEvent;
 import com.sun.javafx.geom.Vec2f;
 import java.awt.Color;
 import java.util.Map;
@@ -50,8 +50,8 @@ public class TestSubscriber implements StatementSubscriber{
         sb.append("\n- [Incremento en]: ");
         sb.append("\n direccion latitud = " + a/c);
         sb.append("\n direccion longitud  = " + b/c);
-        System.out.println(sb);
-        //CSVReader.epl.handle(new IncrementoDireccionEvent(a2,result));
+        //System.out.println(sb);
+        //CSVReader.epl.handle(new DirectionEvent(a2,result));
     }
     
 }

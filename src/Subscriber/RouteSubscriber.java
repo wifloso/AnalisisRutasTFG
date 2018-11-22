@@ -6,11 +6,11 @@
 package Subscriber;
 
 import CSVReader.CSVReader;
-import Event.FinDesplazamiento;
-import Event.InicioDesplazamiento;
+import Event.EndRouteEvent;
+import Event.StarRouteEvent;
 import Event.InterfaceEvent;
 import Event.BasicEvent;
-import Event.Desplazamiento;
+import Event.RouteEvent;
 import java.awt.Color;
 import java.util.Map;
 
@@ -18,10 +18,10 @@ import java.util.Map;
  *
  * @author Carlos
  */
-public class DesplazamientoSubscriber  implements StatementSubscriber{
+public class RouteSubscriber  implements StatementSubscriber{
     
      private final String  Rule = "select a1, a2 " 
-                + "from pattern [ every (a1 = InicioDesplazamiento -> a2 = FinDesplazamiento) ]  ";
+                + "from pattern [ every (a1 = StarRouteEvent -> a2 = EndRouteEvent) ]  ";
     
     @Override
     public String getStatement() {
@@ -31,8 +31,8 @@ public class DesplazamientoSubscriber  implements StatementSubscriber{
     
     public void update(Map<String, InterfaceEvent> eventMap) {
         
-        InicioDesplazamiento event = (InicioDesplazamiento) eventMap.get("a1");
-        FinDesplazamiento fin = (FinDesplazamiento) eventMap.get("a2");
+        StarRouteEvent event = (StarRouteEvent) eventMap.get("a1");
+        EndRouteEvent fin = (EndRouteEvent) eventMap.get("a2");
         
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");
@@ -49,7 +49,7 @@ public class DesplazamientoSubscriber  implements StatementSubscriber{
         sb.append("\n---------------------------------");
         System.out.println(sb);
 
-        CSVReader.epl.handle(new Desplazamiento(event,fin));
+        CSVReader.epl.handle(new RouteEvent(event,fin));
         
         
     }

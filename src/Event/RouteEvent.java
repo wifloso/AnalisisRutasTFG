@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class Desplazamiento extends ComplexEvent implements InterfaceEvent{
+public class RouteEvent extends ComplexEvent implements InterfaceEvent{
     
     private float longitud2;
     private float latitud2;
@@ -22,7 +22,7 @@ public class Desplazamiento extends ComplexEvent implements InterfaceEvent{
     private Date timestamp2;
     private String flag2;     
         
-    public Desplazamiento(ComplexEvent e1,ComplexEvent e2) {
+    public RouteEvent(ComplexEvent e1,ComplexEvent e2) {
         super(e1);
         longitud2 = e2.getLongitud();
         latitud2 = e2.getLatitud();

@@ -6,8 +6,8 @@
 package Subscriber;
 
 import CSVReader.CSVReader;
-import Event.FinDesplazamiento;
-import Event.InicioDesplazamiento;
+import Event.EndRouteEvent;
+import Event.StarRouteEvent;
 import Event.BasicEvent;
 import Event.ComplexEvent;
 import java.awt.Color;
@@ -17,10 +17,10 @@ import java.util.Map;
  *
  * @author Carlos
  */
-public class InicioDesplazamientoSubscriber implements StatementSubscriber{
+public class StartRouteSubscriber implements StatementSubscriber{
     
     private final String  Rule = "select a2 "
-                + " from pattern [every a1 = FinDesplazamiento -> a2 = BasicEvent] ";
+                + " from pattern [every a1 = EndRouteEvent -> a2 = BasicEvent] ";
     
     @Override
     public String getStatement() {
@@ -41,7 +41,7 @@ public class InicioDesplazamientoSubscriber implements StatementSubscriber{
         sb.append("\n time = " + event.getTimestamp().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
-        CSVReader.epl.handle(new InicioDesplazamiento(event));
+        CSVReader.epl.handle(new StarRouteEvent(event));
         //Trazo.coordenadasList.putEventMap(Color.GREEN, event.getLatitud(), event.getLongitud());
     }
 }

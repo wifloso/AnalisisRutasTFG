@@ -7,7 +7,7 @@ package Subscriber;
 
 import CSVReader.CSVReader;
 import Event.BasicEvent;
-import Event.IncrementoDireccionEvent;
+import Event.DirectionEvent;
 import com.sun.javafx.geom.Vec2d;
 import com.sun.javafx.geom.Vec2f;
 import java.util.Map;
@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author Carlos
  */
-public class IncrementoDireccciónSubcriber implements StatementSubscriber{
+public class DirectionSubcriber implements StatementSubscriber{
     
     private final String  Rule = "select a1, a2 " 
                 + "from pattern [ every a1 = BasicEvent ->  a2 = BasicEvent ]";
@@ -48,7 +48,7 @@ public class IncrementoDireccciónSubcriber implements StatementSubscriber{
         sb.append("\n direccion latitud = " + a);
         sb.append("\n direccion longitud  = " + b);
         System.out.println(sb);
-        CSVReader.epl.handle(new IncrementoDireccionEvent(a1,result));
+        CSVReader.epl.handle(new DirectionEvent(a1,result));
     }
     
 }

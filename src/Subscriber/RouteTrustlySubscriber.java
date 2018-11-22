@@ -6,9 +6,9 @@
 package Subscriber;
 
 import CSVReader.CSVReader;
-import Event.Desplazamiento;
-import Event.FinDesplazamiento;
-import Event.InicioDesplazamiento;
+import Event.RouteEvent;
+import Event.EndRouteEvent;
+import Event.StarRouteEvent;
 import Event.InterfaceEvent;
 import java.awt.Color;
 import java.util.Map;
@@ -17,10 +17,10 @@ import java.util.Map;
  *
  * @author Carlos
  */
-public class DesplazamientoTrustlySubscriber implements StatementSubscriber{
+public class RouteTrustlySubscriber implements StatementSubscriber{
      
     private final String  Rule = "select a1 " 
-                + "from Desplazamiento a1  "
+                + "from RouteEvent a1  "
              + "where (timestamp2().getTime() - timestamp().getTime())/1000 > 120 ";
     
     @Override
@@ -31,7 +31,7 @@ public class DesplazamientoTrustlySubscriber implements StatementSubscriber{
     
     public void update(Map<String, InterfaceEvent> eventMap) {
         
-        Desplazamiento event = (Desplazamiento) eventMap.get("a1");
+        RouteEvent event = (RouteEvent) eventMap.get("a1");
         
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");

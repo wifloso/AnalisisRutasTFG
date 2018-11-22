@@ -6,7 +6,7 @@
 package Subscriber;
 
 import CSVReader.CSVReader;
-import Event.FinDesplazamiento;
+import Event.EndRouteEvent;
 import Event.BasicEvent;
 import java.awt.Color;
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @author Carlos
  */
-public class FinSecuenciaSubscriber implements StatementSubscriber{
+public class EndRouteLastSubscriber implements StatementSubscriber{
     
     private final String  Rule = "select a1 " +
                " from BasicEvent as a1 where flag = \"fin\" ";
@@ -38,7 +38,7 @@ public class FinSecuenciaSubscriber implements StatementSubscriber{
             sb.append("\n time = " + event.getTimestamp().toString());
             sb.append("\n---------------------------------");
             System.out.println(sb);
-            CSVReader.epl.handle(new FinDesplazamiento(event));
+            CSVReader.epl.handle(new EndRouteEvent(event));
             //Trazo.coordenadasList.putEventMap(Color.RED, event.getLatitud(), event.getLongitud());
     }
 }

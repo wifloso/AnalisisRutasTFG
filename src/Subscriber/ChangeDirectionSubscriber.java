@@ -8,9 +8,9 @@ package Subscriber;
 import CSVReader.EPLUtils;
 import CSVReader.CSVReader;
 import Event.BasicEvent;
-import Event.IncrementoDireccionEvent;
+import Event.DirectionEvent;
 import Event.ComplexEvent;
-import Event.FinDesplazamiento;
+import Event.EndRouteEvent;
 import java.awt.Color;
 import java.util.Map;
 
@@ -18,10 +18,10 @@ import java.util.Map;
  *
  * @author CarlosAA
  */
-public class CambioDireccionSubscriber implements StatementSubscriber{
+public class ChangeDirectionSubscriber implements StatementSubscriber{
     
     private final String  Rule = "select a1, a2 " 
-                + "from pattern [ every (a1 = IncrementoDireccionEvent -> a2 = IncrementoDireccionEvent) ]  ";
+                + "from pattern [ every a1 = DirectionEvent -> a2 = DirectionEvent ]  ";
     
     @Override
     public String getStatement() {
@@ -29,10 +29,10 @@ public class CambioDireccionSubscriber implements StatementSubscriber{
     }
     
     
-    public void update(Map<String, IncrementoDireccionEvent> eventMap) {
+    public void update(Map<String, DirectionEvent> eventMap) {
         
-        IncrementoDireccionEvent a1 = (IncrementoDireccionEvent) eventMap.get("a1");
-        IncrementoDireccionEvent a2 = (IncrementoDireccionEvent) eventMap.get("a2");
+        DirectionEvent a1 = (DirectionEvent) eventMap.get("a1");
+        DirectionEvent a2 = (DirectionEvent) eventMap.get("a2");
         float angulo,a,b;
         if(true){
             angulo = (float) Math.acos( a1.getCambio().x*a2.getCambio().x+a1.getCambio().y*a2.getCambio().y );

@@ -5,8 +5,8 @@
  */
 package CSVReader;
 
-import Event.FinDesplazamiento;
-import Event.InicioDesplazamiento;
+import Event.EndRouteEvent;
+import Event.StarRouteEvent;
 import Event.InterfaceEvent;
 import Event.BasicEvent;
 import Event.ComplexEvent;
@@ -95,38 +95,38 @@ public class EPLUtils implements InitializingBean{
         IncrementoDireccciónExpresion();
     }
     private void IncrementoDireccciónExpresion(){
-        IncrementoDireccciónSubcriber = new IncrementoDireccciónSubcriber();
+        IncrementoDireccciónSubcriber = new DirectionSubcriber();
         Statement = epService.getEPAdministrator().createEPL(IncrementoDireccciónSubcriber.getStatement());
         Statement.setSubscriber(IncrementoDireccciónSubcriber);  
     }
 
     private void CambioDireccionExpresion(){
-        CambioDireccionSubscriber = new CambioDireccionSubscriber();
+        CambioDireccionSubscriber = new ChangeDirectionSubscriber();
         Statement = epService.getEPAdministrator().createEPL(CambioDireccionSubscriber.getStatement());
         Statement.setSubscriber(CambioDireccionSubscriber);        
     }    
         
     private void CreateDesplazamientoTrustlyExpresion(){
-        DesplazamientoTrustlySubscriber = new DesplazamientoTrustlySubscriber();
+        DesplazamientoTrustlySubscriber = new RouteTrustlySubscriber();
         Statement = epService.getEPAdministrator().createEPL(DesplazamientoTrustlySubscriber.getStatement());
         Statement.setSubscriber(DesplazamientoTrustlySubscriber);  
     }
                 
                 
     private void CreateDesplazamientoExpresion(){
-        DesplazamientoSubscriber = new DesplazamientoSubscriber();
+        DesplazamientoSubscriber = new RouteSubscriber();
         Statement = epService.getEPAdministrator().createEPL(DesplazamientoSubscriber.getStatement());
         Statement.setSubscriber(DesplazamientoSubscriber);  
     }
         
     private void CreateInicioSecuenciaExpresion() {
-        InicioSecuenciaSubscriber = new InicioSecuenciaSubscriber();
+        InicioSecuenciaSubscriber = new StartRouteFirstSubscriber();
         Statement = epService.getEPAdministrator().createEPL(InicioSecuenciaSubscriber.getStatement());
         Statement.setSubscriber(InicioSecuenciaSubscriber);
     }
 
     private void CreateFinSecuenciaExpresion() {
-        FinSecuenciaSubscriber = new FinSecuenciaSubscriber();
+        FinSecuenciaSubscriber = new EndRouteLastSubscriber();
         Statement = epService.getEPAdministrator().createEPL(FinSecuenciaSubscriber.getStatement());
         Statement.setSubscriber(FinSecuenciaSubscriber);
     }
@@ -138,7 +138,7 @@ public class EPLUtils implements InitializingBean{
     }
         
     private void CreateInicioDesplazamientoExpression() {        
-        InicioDesplazamientoSubscriber = new InicioDesplazamientoSubscriber();
+        InicioDesplazamientoSubscriber = new StartRouteSubscriber();
         Statement = epService.getEPAdministrator().createEPL(InicioDesplazamientoSubscriber.getStatement());
         Statement.setSubscriber(InicioDesplazamientoSubscriber);
     }    
@@ -151,7 +151,7 @@ public class EPLUtils implements InitializingBean{
     }
     
     private void CreateFinDesplazamientoExpesion(){
-        FinDesplazamientoSubscriber = new FinDesplazamientoSubscriber();
+        FinDesplazamientoSubscriber = new EndRouteSubscriber();
         Statement = epService.getEPAdministrator().createEPL(FinDesplazamientoSubscriber.getStatement());
         Statement.setSubscriber(FinDesplazamientoSubscriber);
     }

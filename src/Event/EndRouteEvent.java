@@ -6,15 +6,13 @@
 package Event;
 
 
-
 /**
  *
  * @author Carlos
  */
-public class InicioDesplazamiento extends ComplexEvent implements InterfaceEvent{
-
-    public InicioDesplazamiento(BasicEvent e) {
+public class EndRouteEvent extends ComplexEvent implements InterfaceEvent {
+         
+    public EndRouteEvent(BasicEvent e) {
         super(e);
     }
-
 }

@@ -11,11 +11,11 @@ import com.sun.javafx.geom.Vec2f;
  *
  * @author Carlos
  */
-public class IncrementoDireccionEvent  extends ComplexEvent implements InterfaceEvent {
+public class DirectionEvent  extends ComplexEvent implements InterfaceEvent {
     
     Vec2f cambio;
     
-    public IncrementoDireccionEvent(BasicEvent e,Vec2f cambio) {
+    public DirectionEvent(BasicEvent e,Vec2f cambio) {
         super(e);
         this.cambio = cambio;
     }
