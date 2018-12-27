@@ -8,7 +8,6 @@ package Subscriber;
 import CSVReader.CSVReader;
 import Event.BasicEvent;
 import Event.DirectionEvent;
-import com.sun.javafx.geom.Vec2d;
 import com.sun.javafx.geom.Vec2f;
 import java.util.Map;
 

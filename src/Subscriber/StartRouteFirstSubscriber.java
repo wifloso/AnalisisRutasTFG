@@ -6,11 +6,8 @@
 package Subscriber;
 
 import CSVReader.CSVReader;
-import Event.EndRouteEvent;
 import Event.StarRouteEvent;
 import Event.BasicEvent;
-import Event.ComplexEvent;
-import java.awt.Color;
 import java.util.Map;
 /**
  *

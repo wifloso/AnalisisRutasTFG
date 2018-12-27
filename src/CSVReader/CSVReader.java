@@ -23,70 +23,66 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class CSVReader 
 {
-    private List<BasicEvent> puntos;
+    private List<BasicEvent> EventList;
     
     @Autowired
     public static  EPLUtils epl = new EPLUtils();
     
-    public static CoordinateList coordenadasList = new CoordinateList();
+    public static CoordinateList CoordinatesList = new CoordinateList();
     
     
     public void startSendingCoodinates() {
-
-
-                epl.afterPropertiesSet();
-                for (BasicEvent event : puntos) {
-                    epl.handle(event);
-                }           
+        epl.afterPropertiesSet();
+        for (BasicEvent event : EventList) {
+            epl.handle(event);
+        }           
     }
     
-    public CSVReader(String archivo) 
+    public CSVReader(String file) 
     {
-        puntos = new ArrayList<BasicEvent>();
-        reedRutine(archivo);
+        EventList = new ArrayList<BasicEvent>();
+        readFile(file);
         changeOrder();
     }
 
-    public List<BasicEvent> getPuntos() 
+    public List<BasicEvent> getEventList() 
     {
-        return puntos;
+        return EventList;
     }
     
-    //lectura del csv
-    private void reedRutine(String archivo)
+    private void readFile(String archivo)
     {
         BufferedReader br = null;
         try 
         {
-            //abrir fichero
+            //Open file
             br = new BufferedReader(new FileReader("files/"+archivo));
-            br.readLine(); //la primera linea no se lee porque contiene el nombre de las columnas
-            String line = br.readLine();
+            br.readLine(); //Avoid first row with column names
+            String row = br.readLine();
             String [] fields;
             float longitud;
             float latitud;
-            float velocidad;
-            String dia;  
-            BasicEvent p;
-            //lectura del fichero
-            while( line != null )
+            float speed;
+            String day;  
+            BasicEvent event;
+            //rows reading
+            while( row != null )
             {
-                fields = line.split(";"); //las columnas estan separadas por ";"
+                fields = row.split(";"); //All rows are limited by ";"
                 latitud = Float.parseFloat(fields[0]);
                 longitud = Float.parseFloat(fields[1]);
-                velocidad= Float.parseFloat(fields[2]);
-                dia = fields[3];
-                //creamos un nuevo punto y lo guardamos en una lista
-                p = new BasicEvent(longitud,latitud,velocidad,dia);
-                puntos.add(p);
-                //siguiente linea;
-                line = br.readLine();
+                speed= Float.parseFloat(fields[2]);
+                day = fields[3];
+                //to save new event in the list
+                event = new BasicEvent(longitud,latitud,speed,day);
+                EventList.add(event);
+                row = br.readLine();
             }
             //se cierra el fichero
             br.close();
             //put the flags
-            puntos.get(0).setFlag("fin");
-            puntos.get(puntos.size()-1).setFlag("inicio");
+            EventList.get(0).setFlag("fin");
+            EventList.get(EventList.size()-1).setFlag("inicio");
         } 
         catch (FileNotFoundException ex) 
         {
@@ -100,53 +96,51 @@ public class CSVReader
     }
     
     
-    public void imprimir()
+    public void print()
     {
         int i = 0;
-        for( BasicEvent p: puntos )
+        for( BasicEvent event: EventList )
         {
             i++;
-            System.out.println( i + p.toString() );
+            System.out.println( i + event.toString() );
         }
     }
     
-    //imprime la diferencia de tiempo (en segundo) entre dos puntos
+    //print the time difference between events
     public void difTime()
     {
         int i = 0;
-        String s;
-        BasicEvent p = null;
-        for( BasicEvent d: puntos )
+        BasicEvent event = null;
+        for( BasicEvent d: EventList )
         {
             if(i==0){
                 i++;
-                p = d;
+                event = d;
             }else{               
                 i++;
-                System.out.println("Nuemro "+i+"--> segundos entre "+(-p.getTime().getTime().getTime()+d.getTime().getTime().getTime())/1000);   
-                p = d;
+                System.out.println("Nuemro "+i+"--> segundos entre "+(-event.getTime().getTime().getTime()+d.getTime().getTime().getTime())/1000);   
+                event = d;
             }
             
         }
     }
     
-    //imprime los datos en formato CEP
-    public void generateDataCEP()
+    //PRINT EVENT FORMAT ESPER-ONLINE
+    public void generateDataEsperOnline()
     {
         int i = 0;
-        String s;
         long time;
-        BasicEvent p = null;
-        for( BasicEvent d: puntos ){
+        BasicEvent event = null;
+        for( BasicEvent d: EventList ){
             if(i==0){
                 i++;
-                p = d;
+                event = d;
                 System.out.println(d.CEPString()+"\n");
             }else{
-                time = (-p.getTime().getTime().getTime()+d.getTime().getTime().getTime())/1000;
+                time = (-event.getTime().getTime().getTime()+d.getTime().getTime().getTime())/1000;
                 System.out.println("t = t.plus("+time+" seconds)");
                 System.out.println(d.CEPString()+"\n");
-                p = d;
+                event = d;
                 i++;
             }
         }
@@ -155,9 +149,9 @@ public class CSVReader
     private void changeOrder() 
     {   
         List<BasicEvent> help = new ArrayList<BasicEvent>();
-        help.addAll(puntos);
-        for(int i=0; i<puntos.size(); i++){
-            puntos.set(i, help.get(puntos.size()-i-1));
+        help.addAll(EventList);
+        for(int i=0; i<EventList.size(); i++){
+            EventList.set(i, help.get(EventList.size()-i-1));
         }
     }
 

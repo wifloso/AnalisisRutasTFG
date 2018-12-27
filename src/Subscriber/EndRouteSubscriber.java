@@ -8,8 +8,6 @@ package Subscriber;
 import CSVReader.CSVReader;
 import Event.EndRouteEvent;
 import Event.BasicEvent;
-import Event.ComplexEvent;
-import java.awt.Color;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 

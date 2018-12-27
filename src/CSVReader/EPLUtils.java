@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 public class EPLUtils implements InitializingBean{
     
       
-    private EPServiceProvider epService;
+    private EPServiceProvider EPLService;
     private EPStatement Statement;
     
     @Autowired
@@ -41,11 +41,11 @@ public class EPLUtils implements InitializingBean{
     
     @Autowired
     @Qualifier("FinDesplazamiento")
-    private StatementSubscriber FinDesplazamientoSubscriber;
+    private StatementSubscriber EndRouteSubscriber;
     
     @Autowired
     @Qualifier("InicioDesplazamiento")
-    private StatementSubscriber InicioDesplazamientoSubscriber;
+    private StatementSubscriber StartRouteSubscriber;
     
     @Autowired
     @Qualifier("Test")
@@ -54,118 +54,118 @@ public class EPLUtils implements InitializingBean{
     
     @Autowired
     @Qualifier("InicioSecuenciaSubscriber")
-    private StatementSubscriber InicioSecuenciaSubscriber;
+    private StatementSubscriber StartRouteFirstSubscriber;
     
     @Autowired
     @Qualifier("FinSecuenciaSubscriber")
-    private StatementSubscriber FinSecuenciaSubscriber;
+    private StatementSubscriber EndRouteLastSubscriber;
     
     @Autowired
     @Qualifier("DesplazamientoSubscriber")
-    private StatementSubscriber DesplazamientoSubscriber;
+    private StatementSubscriber RouteSubscriber;
        
     @Autowired
     @Qualifier("DesplazamientoTrustlySubscriber")
-    private StatementSubscriber DesplazamientoTrustlySubscriber;
+    private StatementSubscriber RouteTrustlySubscriber;
     
     @Autowired
     @Qualifier("IncrementoDireccciónSubcriber")
-    private StatementSubscriber IncrementoDireccciónSubcriber;
+    private StatementSubscriber DirectionSubcriber;
     
     @Autowired
     @Qualifier("CambioDireccionSubscriber")
-    private StatementSubscriber CambioDireccionSubscriber;
+    private StatementSubscriber ChangeDirectionSubscriber;
     
         public void initService() {
 
         Configuration config = new Configuration();
         config.getEngineDefaults().getThreading().setInternalTimerEnabled(false);
         config.addEventTypeAutoName("Event");
-        epService = EPServiceProviderManager.getDefaultProvider(config);
+        EPLService = EPServiceProviderManager.getDefaultProvider(config);
 
         CreateBasicEventExpression();
-        CreateFinDesplazamientoExpesion();
+        CreateEndRouteExpesion();
         CreateTestExpression();
-        CreateInicioDesplazamientoExpression();
-        CreateInicioSecuenciaExpresion();
-        CreateFinSecuenciaExpresion();
-        CreateDesplazamientoExpresion();
-        CreateDesplazamientoTrustlyExpresion();
-        CambioDireccionExpresion();
-        IncrementoDireccciónExpresion();
+        CreateStartRouteExpression();
+        CreateStartRouteFirstExpresion();
+        CreateEndRouteLastExpresion();
+        CreateRouteExpresion();
+        CreateRouteTrustlyExpresion();
+        CreateChangeDirectionExpresion();
+        CreateDirectionExpresion();
     }
-    private void IncrementoDireccciónExpresion(){
-        IncrementoDireccciónSubcriber = new DirectionSubcriber();
-        Statement = epService.getEPAdministrator().createEPL(IncrementoDireccciónSubcriber.getStatement());
-        Statement.setSubscriber(IncrementoDireccciónSubcriber);  
+    private void CreateDirectionExpresion(){
+        DirectionSubcriber = new DirectionSubcriber();
+        Statement = EPLService.getEPAdministrator().createEPL(DirectionSubcriber.getStatement());
+        Statement.setSubscriber(DirectionSubcriber);  
     }
 
-    private void CambioDireccionExpresion(){
-        CambioDireccionSubscriber = new ChangeDirectionSubscriber();
-        Statement = epService.getEPAdministrator().createEPL(CambioDireccionSubscriber.getStatement());
-        Statement.setSubscriber(CambioDireccionSubscriber);        
+    private void CreateChangeDirectionExpresion(){
+        ChangeDirectionSubscriber = new ChangeDirectionSubscriber();
+        Statement = EPLService.getEPAdministrator().createEPL(ChangeDirectionSubscriber.getStatement());
+        Statement.setSubscriber(ChangeDirectionSubscriber);        
     }    
         
-    private void CreateDesplazamientoTrustlyExpresion(){
-        DesplazamientoTrustlySubscriber = new RouteTrustlySubscriber();
-        Statement = epService.getEPAdministrator().createEPL(DesplazamientoTrustlySubscriber.getStatement());
-        Statement.setSubscriber(DesplazamientoTrustlySubscriber);  
+    private void CreateRouteTrustlyExpresion(){
+        RouteTrustlySubscriber = new RouteTrustlySubscriber();
+        Statement = EPLService.getEPAdministrator().createEPL(RouteTrustlySubscriber.getStatement());
+        Statement.setSubscriber(RouteTrustlySubscriber);  
     }
                 
                 
-    private void CreateDesplazamientoExpresion(){
-        DesplazamientoSubscriber = new RouteSubscriber();
-        Statement = epService.getEPAdministrator().createEPL(DesplazamientoSubscriber.getStatement());
-        Statement.setSubscriber(DesplazamientoSubscriber);  
+    private void CreateRouteExpresion(){
+        RouteSubscriber = new RouteSubscriber();
+        Statement = EPLService.getEPAdministrator().createEPL(RouteSubscriber.getStatement());
+        Statement.setSubscriber(RouteSubscriber);  
     }
         
-    private void CreateInicioSecuenciaExpresion() {
-        InicioSecuenciaSubscriber = new StartRouteFirstSubscriber();
-        Statement = epService.getEPAdministrator().createEPL(InicioSecuenciaSubscriber.getStatement());
-        Statement.setSubscriber(InicioSecuenciaSubscriber);
+    private void CreateStartRouteFirstExpresion() {
+        StartRouteFirstSubscriber = new StartRouteFirstSubscriber();
+        Statement = EPLService.getEPAdministrator().createEPL(StartRouteFirstSubscriber.getStatement());
+        Statement.setSubscriber(StartRouteFirstSubscriber);
     }
 
-    private void CreateFinSecuenciaExpresion() {
-        FinSecuenciaSubscriber = new EndRouteLastSubscriber();
-        Statement = epService.getEPAdministrator().createEPL(FinSecuenciaSubscriber.getStatement());
-        Statement.setSubscriber(FinSecuenciaSubscriber);
+    private void CreateEndRouteLastExpresion() {
+        EndRouteLastSubscriber = new EndRouteLastSubscriber();
+        Statement = EPLService.getEPAdministrator().createEPL(EndRouteLastSubscriber.getStatement());
+        Statement.setSubscriber(EndRouteLastSubscriber);
     }
         
     private void CreateTestExpression(){
         TestSubscriber = new TestSubscriber();
-        Statement = epService.getEPAdministrator().createEPL(TestSubscriber.getStatement());
+        Statement = EPLService.getEPAdministrator().createEPL(TestSubscriber.getStatement());
         Statement.setSubscriber(TestSubscriber);
     }
         
-    private void CreateInicioDesplazamientoExpression() {        
-        InicioDesplazamientoSubscriber = new StartRouteSubscriber();
-        Statement = epService.getEPAdministrator().createEPL(InicioDesplazamientoSubscriber.getStatement());
-        Statement.setSubscriber(InicioDesplazamientoSubscriber);
+    private void CreateStartRouteExpression() {        
+        StartRouteSubscriber = new StartRouteSubscriber();
+        Statement = EPLService.getEPAdministrator().createEPL(StartRouteSubscriber.getStatement());
+        Statement.setSubscriber(StartRouteSubscriber);
     }    
         
     private void CreateBasicEventExpression() {
         
         BasicEventSubscriber = new BasicEventSubscriber();
-        Statement = epService.getEPAdministrator().createEPL(BasicEventSubscriber.getStatement());
+        Statement = EPLService.getEPAdministrator().createEPL(BasicEventSubscriber.getStatement());
         Statement.setSubscriber(BasicEventSubscriber);
     }
     
-    private void CreateFinDesplazamientoExpesion(){
-        FinDesplazamientoSubscriber = new EndRouteSubscriber();
-        Statement = epService.getEPAdministrator().createEPL(FinDesplazamientoSubscriber.getStatement());
-        Statement.setSubscriber(FinDesplazamientoSubscriber);
+    private void CreateEndRouteExpesion(){
+        EndRouteSubscriber = new EndRouteSubscriber();
+        Statement = EPLService.getEPAdministrator().createEPL(EndRouteSubscriber.getStatement());
+        Statement.setSubscriber(EndRouteSubscriber);
     }
     
     public void handle(BasicEvent event) {
         //CurrentTimeEvent
-        epService.getEPRuntime().sendEvent(new CurrentTimeEvent(event.getDateTime().getTime()));
-        epService.getEPRuntime().sendEvent(event);
+        EPLService.getEPRuntime().sendEvent(new CurrentTimeEvent(event.getDateTime().getTime()));
+        EPLService.getEPRuntime().sendEvent(event);
 
     }
     
     public void handle(InterfaceEvent event) {
-        epService.getEPRuntime().sendEvent(new CurrentTimeEvent(event.getDateTime().getTime()));
-        epService.getEPRuntime().sendEvent(event);
+        EPLService.getEPRuntime().sendEvent(new CurrentTimeEvent(event.getDateTime().getTime()));
+        EPLService.getEPRuntime().sendEvent(event);
     }
     
     @Override

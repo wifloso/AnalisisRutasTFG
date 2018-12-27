@@ -7,8 +7,6 @@ package Subscriber;
 
 import CSVReader.CSVReader;
 import Event.RouteEvent;
-import Event.EndRouteEvent;
-import Event.StarRouteEvent;
 import Event.InterfaceEvent;
 import java.awt.Color;
 import java.util.Map;
@@ -51,8 +49,8 @@ public class RouteTrustlySubscriber implements StatementSubscriber{
         sb.append("\n---------------------------------");
         System.out.println(sb);
         //todo: named window to speed analysis
-        CSVReader.coordenadasList.putEventMap(Color.WHITE, event.getLatitud(), event.getLongitud());
-        CSVReader.coordenadasList.putEventMap(Color.BLACK, event.getLatitud2(), event.getLongitud2());
+        CSVReader.CoordinatesList.putEventMap(Color.WHITE, event.getLatitud(), event.getLongitud());
+        CSVReader.CoordinatesList.putEventMap(Color.BLACK, event.getLatitud2(), event.getLongitud2());
         
         
     }

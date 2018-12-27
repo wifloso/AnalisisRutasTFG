@@ -8,7 +8,6 @@ package Map;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import org.openstreetmap.gui.jmapviewer.Layer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 
 /**

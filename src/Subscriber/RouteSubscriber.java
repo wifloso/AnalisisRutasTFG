@@ -9,9 +9,7 @@ import CSVReader.CSVReader;
 import Event.EndRouteEvent;
 import Event.StarRouteEvent;
 import Event.InterfaceEvent;
-import Event.BasicEvent;
 import Event.RouteEvent;
-import java.awt.Color;
 import java.util.Map;
 
 /**

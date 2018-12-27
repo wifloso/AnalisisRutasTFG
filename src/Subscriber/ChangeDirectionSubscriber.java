@@ -5,12 +5,8 @@
  */
 package Subscriber;
 
-import CSVReader.EPLUtils;
 import CSVReader.CSVReader;
-import Event.BasicEvent;
 import Event.DirectionEvent;
-import Event.ComplexEvent;
-import Event.EndRouteEvent;
 import java.awt.Color;
 import java.util.Map;
 
@@ -35,11 +31,11 @@ public class ChangeDirectionSubscriber implements StatementSubscriber{
         DirectionEvent a2 = (DirectionEvent) eventMap.get("a2");
         float angulo,a,b;
         if(true){
-            angulo = (float) Math.acos( a1.getCambio().x*a2.getCambio().x+a1.getCambio().y*a2.getCambio().y );
+            angulo = (float) Math.acos( a1.getDirection().x*a2.getDirection().x+a1.getDirection().y*a2.getDirection().y );
         
         }else{
-            a = (float) Math.atan2(a1.getCambio().x,a1.getCambio().x);
-            b = (float) Math.atan2(a2.getCambio().x,a2.getCambio().x);
+            a = (float) Math.atan2(a1.getDirection().x,a1.getDirection().x);
+            b = (float) Math.atan2(a2.getDirection().x,a2.getDirection().x);
             angulo = Math.abs(a-b);
             
         }
@@ -60,7 +56,7 @@ public class ChangeDirectionSubscriber implements StatementSubscriber{
         
         if(hayCambio){
             System.out.println(sb);
-            CSVReader.coordenadasList.putEventMap(Color.green, a2.getLatitud(), a2.getLongitud());
+            CSVReader.CoordinatesList.putEventMap(Color.green, a2.getLatitud(), a2.getLongitud());
         }
         
         

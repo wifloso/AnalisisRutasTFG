@@ -9,8 +9,6 @@ import CSVReader.CSVReader;
 import Event.BasicEvent;
 import java.awt.Color;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,11 +40,11 @@ public class BasicEventSubscriber implements StatementSubscriber{
         //System.out.println(sb);
         
         if(event.getSpeed() < 3){
-            CSVReader.coordenadasList.putEventMap(Color.yellow, event.getLatitud(), event.getLongitud());
+            CSVReader.CoordinatesList.putEventMap(Color.yellow, event.getLatitud(), event.getLongitud());
         }else if(event.getSpeed() >= 3 && event.getSpeed() < 6){
-            CSVReader.coordenadasList.putEventMap(Color.orange, event.getLatitud(), event.getLongitud());
+            CSVReader.CoordinatesList.putEventMap(Color.orange, event.getLatitud(), event.getLongitud());
         }else if(event.getSpeed() >= 6 && event.getSpeed() < 100){
-            CSVReader.coordenadasList.putEventMap(Color.red, event.getLatitud(), event.getLongitud());
+            CSVReader.CoordinatesList.putEventMap(Color.red, event.getLatitud(), event.getLongitud());
         }
         
     }   

@@ -13,15 +13,15 @@ import com.sun.javafx.geom.Vec2f;
  */
 public class DirectionEvent  extends ComplexEvent implements InterfaceEvent {
     
-    Vec2f cambio;
+    Vec2f direction;
     
     public DirectionEvent(BasicEvent e,Vec2f cambio) {
         super(e);
-        this.cambio = cambio;
+        this.direction = cambio;
     }
 
-    public Vec2f getCambio() {
-        return cambio;
+    public Vec2f getDirection() {
+        return direction;
     }
     
     

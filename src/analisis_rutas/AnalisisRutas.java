@@ -48,17 +48,23 @@ public class AnalisisRutas
         }else{
             System.out.println("Lectura de "+entradaTeclado+"... \n");
         }
-        CSVReader t = new CSVReader(entradaTeclado); //ejemplo: campsa.scv
-        //t.imprimir();
-        //t.difTime();
-        //t.generateDataCEP();       
-        t.startSendingCoodinates();
-        Map instance;
-        Coordinate bboxll = new Coordinate(-90.0, -180.0);
-        Coordinate bboxur = new Coordinate(90.0, 180.0);
-        instance = new Map(bboxll, bboxur,CSVReader.coordenadasList);
-        instance.initChangeStream();
-        instance.setVisible(true);
+        CSVReader t = new CSVReader(entradaTeclado);
+        
+        if(true){
+            t.startSendingCoodinates();
+            Map instance;
+            Coordinate bboxll = new Coordinate(-90.0, -180.0);
+            Coordinate bboxur = new Coordinate(90.0, 180.0);
+            instance = new Map(bboxll, bboxur,CSVReader.CoordinatesList);
+            instance.initChangeStream();
+            instance.setVisible(true);
+        }else{
+           t.print();
+           t.difTime();
+           t.generateDataEsperOnline();
+        }
+        //      
+        
         
     }
     

@@ -9,44 +9,28 @@ package Map;
  *
  * @author CarlosAA
  */
-import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.zip.GZIPInputStream;
 import javax.swing.JFrame;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapRectangle;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
-import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
-import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
-//import org.openstreetmap.osmosis.core.xml.common.DateParser;
+
 
 public class Map extends JFrame  {
         /**
