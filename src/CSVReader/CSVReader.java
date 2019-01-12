@@ -5,14 +5,17 @@
  */
 package CSVReader;
 
+import LogicEPL.EPLEngine;
 import Event.BasicEvent;
 import Map.CoordinateList;
+import Map.Map;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +27,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CSVReader 
 {
     private List<BasicEvent> EventList;
-    
-    @Autowired
-    public static  EPLUtils epl = new EPLUtils();
-    
+    public static  EPLEngine EPL = new EPLEngine();
     public static CoordinateList CoordinatesList = new CoordinateList();
+    public static Map Mapinstance;
     
     
-    public void startSendingCoodinates() {
-        epl.afterPropertiesSet();
-        for (BasicEvent event : EventList) {
-            epl.handle(event);
-        }           
-    }
+    
     
     public CSVReader(String file) 
     {
         EventList = new ArrayList<BasicEvent>();
         readFile(file);
         changeOrder();
+    }
+    
+    public void startSendingCoodinates() {
+        EPL.afterPropertiesSet();
+        for (BasicEvent event : EventList) {
+            EPL.handle(event);
+        }           
     }
 
     public List<BasicEvent> getEventList() 
@@ -135,11 +138,11 @@ public class CSVReader
             if(i==0){
                 i++;
                 event = d;
-                System.out.println(d.CEPString()+"\n");
+                System.out.println(d.CEPOnlineString()+"\n");
             }else{
                 time = (-event.getTime().getTime().getTime()+d.getTime().getTime().getTime())/1000;
                 System.out.println("t = t.plus("+time+" seconds)");
-                System.out.println(d.CEPString()+"\n");
+                System.out.println(d.CEPOnlineString()+"\n");
                 event = d;
                 i++;
             }
@@ -152,6 +155,35 @@ public class CSVReader
         help.addAll(EventList);
         for(int i=0; i<EventList.size(); i++){
             EventList.set(i, help.get(EventList.size()-i-1));
+        }
+    }
+    
+    public static void main(String[] args) 
+    {       
+        System.out.println("Intruduzca el nombre del archivo dentro de la carpeta files");
+        System.out.println("Si pulsa intro se leera la ruta predeterminada");
+        System.out.println("...");
+        String entradaTeclado = "";
+        Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
+        entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner
+        if(entradaTeclado.isEmpty()){
+            System.out.println("Lectura de ruta predeterminada... \n");
+            entradaTeclado = "campsa.csv";
+        }else{
+            System.out.println("Lectura de "+entradaTeclado+"... \n");
+        }
+        CSVReader t = new CSVReader(entradaTeclado);
+        
+        if(true){
+            t.startSendingCoodinates();
+            Mapinstance = new Map();
+            Mapinstance.initChangeStream();
+            Mapinstance.setVisible(true);
+            Mapinstance.EditMap(CoordinatesList);
+        }else{
+           t.print();
+           t.difTime();
+           t.generateDataEsperOnline();
         }
     }
 

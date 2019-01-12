@@ -11,7 +11,7 @@ import com.sun.javafx.geom.Vec2f;
  *
  * @author Carlos
  */
-public class DirectionEvent  extends ComplexEvent implements InterfaceEvent {
+public class DirectionEvent  extends ComplexEvent {
     
     Vec2f direction;
     

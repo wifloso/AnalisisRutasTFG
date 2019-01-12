@@ -14,7 +14,7 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
  *
  * @author Carlos
  */
-public class CoordinateList {
+public  class CoordinateList {
     List<MapMarkerDot> EventMap;
     
     public CoordinateList(){

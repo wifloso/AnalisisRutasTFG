@@ -47,7 +47,7 @@ public class RouteSubscriber  implements StatementSubscriber{
         sb.append("\n---------------------------------");
         System.out.println(sb);
 
-        CSVReader.epl.handle(new RouteEvent(event,fin));
+        CSVReader.EPL.handle(new RouteEvent(event,fin));
         
         
     }

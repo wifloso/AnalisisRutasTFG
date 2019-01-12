@@ -40,7 +40,7 @@ public class EndRouteSubscriber  implements StatementSubscriber{
             sb.append("\n time = " + event.getTimestamp().toString());
             sb.append("\n---------------------------------");
             System.out.println(sb);
-            CSVReader.epl.handle(new EndRouteEvent(event));
+            CSVReader.EPL.handle(new EndRouteEvent(event));
             //Trazo.coordenadasList.putEventMap(Color.RED, event.getLatitud(), event.getLongitud());
     }
     

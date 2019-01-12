@@ -45,7 +45,7 @@ public class BasicEvent {
         this.flag = "";
     }
     
-    //metodo para pasar el String de la fecha a un objeto Calendar
+    //parse csv date string to Calendar
     private Calendar setTime(String sDate)
     {
         String[] sDateSlitp = sDate.split(" ");
@@ -59,40 +59,6 @@ public class BasicEvent {
         c.set( Calendar.SECOND, Integer.parseInt( sTime[2] ) );
         c.set( Calendar.MILLISECOND, 0 );
         return c;
-    }
-    
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    
-    public float getLongitud() 
-    {
-        return longitud;
-    }
-
-    public float getLatitud()
-    {
-        return latitud;
-    }
-
-    public float getSpeed() 
-    {
-        return speed;
-    }
-
-    public Calendar getTime() 
-    {
-        return time;
-    }
-    
-    public Date getDateTime() 
-    {
-        return time.getTime();
     }
     
     public int getMonth(String s)
@@ -142,17 +108,48 @@ public class BasicEvent {
        return num;
     }
     
-
-    
     @Override
     public String toString()
     {
         return "PuntoEvent[Latitud:"+latitud+" Longitud:"+longitud+" Velocidad:"+speed+"]";
     }
-    
 
-    public String CEPString()
+    public String CEPOnlineString()
     {
         return "PuntoEvent ={ timestamp = \""+time.getTime()+"\", latitud = "+latitud+", longitud = "+longitud+",Speed = "+speed+" }";
     }
+    
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public float getLongitud() 
+    {
+        return longitud;
+    }
+
+    public float getLatitud()
+    {
+        return latitud;
+    }
+
+    public float getSpeed() 
+    {
+        return speed;
+    }
+
+    public Calendar getTime() 
+    {
+        return time;
+    }
+    
+    public Date getDateTime() 
+    {
+        return time.getTime();
+    }
+    
 }

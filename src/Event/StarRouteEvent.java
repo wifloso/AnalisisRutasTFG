@@ -11,7 +11,7 @@ package Event;
  *
  * @author Carlos
  */
-public class StarRouteEvent extends ComplexEvent implements InterfaceEvent{
+public class StarRouteEvent extends ComplexEvent {
 
     public StarRouteEvent(BasicEvent e) {
         super(e);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CSVReader;
+package LogicEPL;
 
 import Event.EndRouteEvent;
 import Event.StarRouteEvent;
@@ -29,22 +29,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope(value = "singleton")
-public class EPLUtils implements InitializingBean{
+public class EPLEngine implements InitializingBean{
     
       
     private EPServiceProvider EPLService;
     private EPStatement Statement;
     
     @Autowired
-    @Qualifier("Basic")
+    @Qualifier("BasicEvent")
     private StatementSubscriber BasicEventSubscriber;
     
     @Autowired
-    @Qualifier("FinDesplazamiento")
+    @Qualifier("EndRoute")
     private StatementSubscriber EndRouteSubscriber;
     
     @Autowired
-    @Qualifier("InicioDesplazamiento")
+    @Qualifier("StartRoute")
     private StatementSubscriber StartRouteSubscriber;
     
     @Autowired
@@ -53,37 +53,43 @@ public class EPLUtils implements InitializingBean{
     
     
     @Autowired
-    @Qualifier("InicioSecuenciaSubscriber")
+    @Qualifier("StartRouteFirst")
     private StatementSubscriber StartRouteFirstSubscriber;
     
     @Autowired
-    @Qualifier("FinSecuenciaSubscriber")
+    @Qualifier("EndRouteLast")
     private StatementSubscriber EndRouteLastSubscriber;
     
     @Autowired
-    @Qualifier("DesplazamientoSubscriber")
+    @Qualifier("Route")
     private StatementSubscriber RouteSubscriber;
        
     @Autowired
-    @Qualifier("DesplazamientoTrustlySubscriber")
+    @Qualifier("RouteTrustly")
     private StatementSubscriber RouteTrustlySubscriber;
     
     @Autowired
-    @Qualifier("IncrementoDireccciónSubcriber")
+    @Qualifier("Direction")
     private StatementSubscriber DirectionSubcriber;
     
     @Autowired
-    @Qualifier("CambioDireccionSubscriber")
+    @Qualifier("ChangeDirection")
     private StatementSubscriber ChangeDirectionSubscriber;
     
-        public void initService() {
+    public void initService() {
 
         Configuration config = new Configuration();
         config.getEngineDefaults().getThreading().setInternalTimerEnabled(false);
         config.addEventTypeAutoName("Event");
         EPLService = EPServiceProviderManager.getDefaultProvider(config);
-
-        CreateBasicEventExpression();
+        
+        JoinSubcribers();
+    }
+        
+        
+    private void JoinSubcribers(){
+           
+        CreateBasicEventExpression();    
         CreateEndRouteExpesion();
         CreateTestExpression();
         CreateStartRouteExpression();
@@ -93,7 +99,9 @@ public class EPLUtils implements InitializingBean{
         CreateRouteTrustlyExpresion();
         CreateChangeDirectionExpresion();
         CreateDirectionExpresion();
+        
     }
+        
     private void CreateDirectionExpresion(){
         DirectionSubcriber = new DirectionSubcriber();
         Statement = EPLService.getEPAdministrator().createEPL(DirectionSubcriber.getStatement());

@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class RouteEvent extends ComplexEvent implements InterfaceEvent{
+public class RouteEvent extends ComplexEvent {
     
     private float longitud2;
     private float latitud2;

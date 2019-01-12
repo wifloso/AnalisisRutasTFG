@@ -10,7 +10,7 @@ package Event;
  *
  * @author Carlos
  */
-public class EndRouteEvent extends ComplexEvent implements InterfaceEvent {
+public class EndRouteEvent extends ComplexEvent  {
          
     public EndRouteEvent(BasicEvent e) {
         super(e);

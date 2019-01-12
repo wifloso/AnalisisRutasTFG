@@ -48,13 +48,12 @@ public class Map extends JFrame  {
         private Desktop desk;
         private boolean dloadRunning = false;
         private boolean redrawRunning = false;
-        public CoordinateList Events;
+
         
-        public Map(Coordinate bboxll, Coordinate bboxur, CoordinateList Events) {
+        public Map() {
                 GridBagLayout gbl = new GridBagLayout();
                 GridBagConstraints gbc = new GridBagConstraints();
-                this.Events = Events;
-                this.setTitle("LiveEditMapViewer");
+                this.setTitle("Analis de rutas");
                 this.setLayout(gbl);
                 this.bboxur = bboxur;
                 desk = Desktop.getDesktop();
@@ -62,7 +61,8 @@ public class Map extends JFrame  {
                 DefaultMapController mapController = new DefaultMapController(map);
                 mapController.setMovementMouseButton(MouseEvent.BUTTON1);
                 map.setSize(800, 800);
-                EditMap(Events);
+                //EditMap(Events);
+                GotoMalaga();
                 setExtendedState(JFrame.MAXIMIZED_BOTH);
                 gbc.gridwidth = 1;
                 gbc.weighty = 1;
@@ -83,15 +83,19 @@ public class Map extends JFrame  {
 
         }
         
-        private void EditMap(CoordinateList Events){
-            for(MapMarkerDot Point: Events.getEventPos()){
-                 map.addMapMarker(Point);
-            }
-
+        public void GotoMalaga(){
             map.getMapPosition(new Coordinate(36.718267,-4.432112));
             map.setZoom(6);
             map.setDisplayPosition(7990, 6394, 6);
             map.setZoom(13);
+        }
+        
+        public void EditMap(CoordinateList Events){
+            for(MapMarkerDot Point: Events.getEventPos()){
+                 map.addMapMarker(Point);
+            }
+
+
         }
         
         public void initChangeStream() {
@@ -118,7 +122,6 @@ public class Map extends JFrame  {
                         ioe.printStackTrace();
                         System.exit(1);
                 }
-                //setupLatLonArray();
         }
         
          

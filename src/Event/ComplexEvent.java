@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class ComplexEvent {
+public class ComplexEvent implements InterfaceEvent{
     private float longitud;
     private float latitud;
     private float speed;

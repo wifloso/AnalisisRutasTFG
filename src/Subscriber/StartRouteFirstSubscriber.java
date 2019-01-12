@@ -37,7 +37,7 @@ public class StartRouteFirstSubscriber implements StatementSubscriber{
         sb.append("\n time = " + event.getTimestamp().toString());
         sb.append("\n---------------------------------");
         System.out.println(sb);
-        CSVReader.epl.handle(new StarRouteEvent(event));
+        CSVReader.EPL.handle(new StarRouteEvent(event));
         //Trazo.coordenadasList.putEventMap(Color.GREEN, event.getLatitud(), event.getLongitud());
     }
 }

@@ -47,7 +47,7 @@ public class DirectionSubcriber implements StatementSubscriber{
         sb.append("\n direccion latitud = " + a);
         sb.append("\n direccion longitud  = " + b);
         System.out.println(sb);
-        CSVReader.epl.handle(new DirectionEvent(a1,result));
+        CSVReader.EPL.handle(new DirectionEvent(a1,result));
     }
     
 }
