@@ -13,13 +13,13 @@ import java.util.Date;
  * @author Carlos
  */
 public class ComplexEvent implements InterfaceEvent{
+    
     private float longitud;
     private float latitud;
     private float speed;
     private Calendar time;
     private Date timestamp;
     private String flag;
-
 
     public ComplexEvent(ComplexEvent e) 
     {

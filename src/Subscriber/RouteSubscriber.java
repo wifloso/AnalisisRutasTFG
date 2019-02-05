@@ -7,9 +7,10 @@ package Subscriber;
 
 import CSVReader.CSVReader;
 import Event.EndRouteEvent;
-import Event.StarRouteEvent;
+import Event.StartRouteEvent;
 import Event.InterfaceEvent;
 import Event.RouteEvent;
+import java.awt.Color;
 import java.util.Map;
 
 /**
@@ -18,18 +19,20 @@ import java.util.Map;
  */
 public class RouteSubscriber  implements StatementSubscriber{
     
-     private final String  Rule = "select a1, a2 " 
-                + "from pattern [ every (a1 = StarRouteEvent -> a2 = EndRouteEvent) ]  ";
+     private final String  Query = 
+             "select a1, a2 " 
+             + "from pattern "
+             + "[ every (a1 = StartRouteEvent -> a2 = EndRouteEvent) ] ";
     
     @Override
     public String getStatement() {
-        return Rule;
+        return Query;
     } 
     
     
     public void update(Map<String, InterfaceEvent> eventMap) {
         
-        StarRouteEvent event = (StarRouteEvent) eventMap.get("a1");
+        StartRouteEvent event = (StartRouteEvent) eventMap.get("a1");
         EndRouteEvent fin = (EndRouteEvent) eventMap.get("a2");
         
         StringBuilder sb = new StringBuilder();
@@ -48,8 +51,8 @@ public class RouteSubscriber  implements StatementSubscriber{
         System.out.println(sb);
 
         CSVReader.EPL.handle(new RouteEvent(event,fin));
-        
-        
+        //CSVReader.CoordinatesList.putDot(Color.WHITE, event.getLatitud(), event.getLongitud());
+        //CSVReader.CoordinatesList.putDot(Color.BLACK, fin.getLatitud(), fin.getLongitud());
     }
     
     

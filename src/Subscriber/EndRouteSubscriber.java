@@ -18,18 +18,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class EndRouteSubscriber  implements StatementSubscriber{
 
-    private final String  Rule = "select a1 " +
-               " from pattern [every a1 =   BasicEvent -> (timer:interval(150 seconds) and not a2 = BasicEvent)]";
+    private final String  Query = "select a1 "
+            + "from pattern [every a1 =   BasicEvent -> "
+            + "(timer:interval(150 seconds) and not a2 = BasicEvent)]";
     
     @Override
     public String getStatement() {
-        return Rule;
+        return Query;
     }
     
     public void update(Map<String, BasicEvent> eventMap) {
 
             BasicEvent event = (BasicEvent) eventMap.get("a1");
-            BasicEvent a2 = (BasicEvent) eventMap.get("a2");
         
             StringBuilder sb = new StringBuilder();
             sb.append("---------------------------------");
@@ -41,7 +41,6 @@ public class EndRouteSubscriber  implements StatementSubscriber{
             sb.append("\n---------------------------------");
             System.out.println(sb);
             CSVReader.EPL.handle(new EndRouteEvent(event));
-            //Trazo.coordenadasList.putEventMap(Color.RED, event.getLatitud(), event.getLongitud());
     }
     
 }

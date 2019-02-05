@@ -5,11 +5,8 @@
  */
 package LogicEPL;
 
-import Event.EndRouteEvent;
-import Event.StarRouteEvent;
 import Event.InterfaceEvent;
 import Event.BasicEvent;
-import Event.ComplexEvent;
 import Subscriber.*;
 import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPServiceProvider;
@@ -17,8 +14,6 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.time.CurrentTimeEvent;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -35,46 +30,17 @@ public class EPLEngine implements InitializingBean{
     private EPServiceProvider EPLService;
     private EPStatement Statement;
     
-    @Autowired
-    @Qualifier("BasicEvent")
     private StatementSubscriber BasicEventSubscriber;
-    
-    @Autowired
-    @Qualifier("EndRoute")
     private StatementSubscriber EndRouteSubscriber;
-    
-    @Autowired
-    @Qualifier("StartRoute")
     private StatementSubscriber StartRouteSubscriber;
-    
-    @Autowired
-    @Qualifier("Test")
-    private StatementSubscriber TestSubscriber;
-    
-    
-    @Autowired
-    @Qualifier("StartRouteFirst")
     private StatementSubscriber StartRouteFirstSubscriber;
-    
-    @Autowired
-    @Qualifier("EndRouteLast")
     private StatementSubscriber EndRouteLastSubscriber;
-    
-    @Autowired
-    @Qualifier("Route")
     private StatementSubscriber RouteSubscriber;
-       
-    @Autowired
-    @Qualifier("RouteTrustly")
     private StatementSubscriber RouteTrustlySubscriber;
-    
-    @Autowired
-    @Qualifier("Direction")
     private StatementSubscriber DirectionSubcriber;
-    
-    @Autowired
-    @Qualifier("ChangeDirection")
     private StatementSubscriber ChangeDirectionSubscriber;
+    
+    private StatementSubscriber TestSubscriber;
     
     public void initService() {
 
@@ -91,7 +57,6 @@ public class EPLEngine implements InitializingBean{
            
         CreateBasicEventExpression();    
         CreateEndRouteExpesion();
-        CreateTestExpression();
         CreateStartRouteExpression();
         CreateStartRouteFirstExpresion();
         CreateEndRouteLastExpresion();
@@ -99,6 +64,7 @@ public class EPLEngine implements InitializingBean{
         CreateRouteTrustlyExpresion();
         CreateChangeDirectionExpresion();
         CreateDirectionExpresion();
+        CreateTestExpression();
         
     }
         
@@ -170,7 +136,6 @@ public class EPLEngine implements InitializingBean{
         EPLService.getEPRuntime().sendEvent(event);
 
     }
-    
     public void handle(InterfaceEvent event) {
         EPLService.getEPRuntime().sendEvent(new CurrentTimeEvent(event.getDateTime().getTime()));
         EPLService.getEPRuntime().sendEvent(event);

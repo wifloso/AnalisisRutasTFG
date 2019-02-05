@@ -8,6 +8,7 @@ package Subscriber;
 import CSVReader.CSVReader;
 import Event.EndRouteEvent;
 import Event.BasicEvent;
+import java.util.Calendar;
 import java.util.Map;
 
 /**
@@ -16,12 +17,12 @@ import java.util.Map;
  */
 public class EndRouteLastSubscriber implements StatementSubscriber{
     
-    private final String  Rule = "select a1 " +
+    private final String  Query = "select a1 " +
                " from BasicEvent as a1 where flag = \"fin\" ";
     
     @Override
     public String getStatement() {
-        return Rule;
+        return Query;
     }
     
     public void update(Map<String, BasicEvent> eventMap) {
@@ -37,7 +38,7 @@ public class EndRouteLastSubscriber implements StatementSubscriber{
             sb.append("\n time = " + event.getTimestamp().toString());
             sb.append("\n---------------------------------");
             System.out.println(sb);
+            event.getTime().add(Calendar.SECOND,1);
             CSVReader.EPL.handle(new EndRouteEvent(event));
-            //Trazo.coordenadasList.putEventMap(Color.RED, event.getLatitud(), event.getLongitud());
     }
 }

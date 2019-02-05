@@ -18,15 +18,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class BasicEventSubscriber implements StatementSubscriber{
 
-    private final String  Rule = "select * from BasicEvent as a";
+    private final String  Query = 
+              "select a "
+            + "from BasicEvent as a";
+    private int SlowSpeed = 3;
+    private int FastSpeed = 6;
+    private int FakeSpeed = 100;
     
     @Override
     public String getStatement() {
-        return Rule;
+        return Query;
     }
     
     public void update(Map<String, BasicEvent> eventMap) {
-        // average temp over 10 secs
         BasicEvent event = (BasicEvent) eventMap.get("a");
 
         StringBuilder sb = new StringBuilder();
@@ -37,14 +41,14 @@ public class BasicEventSubscriber implements StatementSubscriber{
         sb.append("\n speed = " + event.getSpeed() );    
         sb.append("\n timestamp = " + event.getTimestamp().toString() );  
         sb.append("\n---------------------------------");
-        //System.out.println(sb);
-        
-        if(event.getSpeed() < 3){
-            CSVReader.CoordinatesList.putEventMap(Color.yellow, event.getLatitud(), event.getLongitud());
-        }else if(event.getSpeed() >= 3 && event.getSpeed() < 6){
-            CSVReader.CoordinatesList.putEventMap(Color.orange, event.getLatitud(), event.getLongitud());
-        }else if(event.getSpeed() >= 6 && event.getSpeed() < 100){
-            CSVReader.CoordinatesList.putEventMap(Color.red, event.getLatitud(), event.getLongitud());
+        System.out.println(sb);
+ 
+        if(event.getSpeed() < SlowSpeed){
+            CSVReader.CoordinatesList.putDot(Color.green, event.getLatitud(), event.getLongitud());
+        }else if(event.getSpeed() >= SlowSpeed && event.getSpeed() < FastSpeed){
+            CSVReader.CoordinatesList.putDot(Color.yellow, event.getLatitud(), event.getLongitud());
+        }else if(event.getSpeed() >= FastSpeed && event.getSpeed() < FakeSpeed){
+            CSVReader.CoordinatesList.putDot(Color.red, event.getLatitud(), event.getLongitud());
         }
         
     }   

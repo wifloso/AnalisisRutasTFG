@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Carlos
  */
-public class BasicEvent {
+public class BasicEvent  {
     private float longitud;
     private float latitud;
     private float speed;
@@ -116,7 +116,8 @@ public class BasicEvent {
 
     public String CEPOnlineString()
     {
-        return "PuntoEvent ={ timestamp = \""+time.getTime()+"\", latitud = "+latitud+", longitud = "+longitud+",Speed = "+speed+" }";
+        return "BasicEvent ={ timestamp = \""+time.getTime()+"\", "
+         + "latitud = "+latitud+", longitud = "+longitud+",Speed = "+speed+" }";
     }
     
     public void setFlag(String flag) {
@@ -151,5 +152,10 @@ public class BasicEvent {
     {
         return time.getTime();
     }
+
+    public void setTime(Calendar time) {
+        this.time = time;
+    }    
+    
     
 }

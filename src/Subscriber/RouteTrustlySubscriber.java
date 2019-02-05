@@ -17,13 +17,14 @@ import java.util.Map;
  */
 public class RouteTrustlySubscriber implements StatementSubscriber{
      
-    private final String  Rule = "select a1 " 
-                + "from RouteEvent a1  "
-             + "where (timestamp2().getTime() - timestamp().getTime())/1000 > 120 ";
+    private final String  Query =
+        "select a1 " 
+      + "from RouteEvent a1  "
+      + "where (timestamp2().getTime() - timestamp().getTime())/1000 > 120";
     
     @Override
     public String getStatement() {
-        return Rule;
+        return Query;
     } 
     
     
@@ -32,8 +33,6 @@ public class RouteTrustlySubscriber implements StatementSubscriber{
         RouteEvent event = (RouteEvent) eventMap.get("a1");
         
         StringBuilder sb = new StringBuilder();
-        sb.append("---------------------------------");
-        sb.append("---------------------------------");
         sb.append("---------------------------------");
         sb.append("---------------------------------");
         sb.append("\n- [Desplazamiento Trustly inicio]: ");
@@ -46,12 +45,11 @@ public class RouteTrustlySubscriber implements StatementSubscriber{
         sb.append("\n longitud_fin = " + event.getLongitud2());
         sb.append("\n speed_fin = " + event.getSpeed2()); 
         sb.append("\n time_fin = " + event.getTimestamp2().toString());
+        sb.append("\n"+(event.getTimestamp2().getTime() - event.getTimestamp().getTime())/1000);
         sb.append("\n---------------------------------");
         System.out.println(sb);
         //todo: named window to speed analysis
-        CSVReader.CoordinatesList.putEventMap(Color.WHITE, event.getLatitud(), event.getLongitud());
-        CSVReader.CoordinatesList.putEventMap(Color.BLACK, event.getLatitud2(), event.getLongitud2());
-        
-        
+        CSVReader.CoordinatesList.putDot(Color.WHITE, event.getLatitud(), event.getLongitud());
+        CSVReader.CoordinatesList.putDot(Color.BLACK, event.getLatitud2(), event.getLongitud2());
     }
 }

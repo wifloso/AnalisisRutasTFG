@@ -8,7 +8,7 @@ package CSVReader;
 import LogicEPL.EPLEngine;
 import Event.BasicEvent;
 import Map.CoordinateList;
-import Map.Map;
+import Map.MapCreator;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -29,7 +28,7 @@ public class CSVReader
     private List<BasicEvent> EventList;
     public static  EPLEngine EPL = new EPLEngine();
     public static CoordinateList CoordinatesList = new CoordinateList();
-    public static Map Mapinstance;
+    public static MapCreator Mapinstance;
     
     
     
@@ -59,7 +58,7 @@ public class CSVReader
         try 
         {
             //Open file
-            br = new BufferedReader(new FileReader("files/"+archivo));
+            br = new BufferedReader(new FileReader("files/"+archivo+".csv"));
             br.readLine(); //Avoid first row with column names
             String row = br.readLine();
             String [] fields;
@@ -89,7 +88,7 @@ public class CSVReader
         } 
         catch (FileNotFoundException ex) 
         {
-            System.out.println("El fichero \""+archivo+"\"sa no existe");
+            System.out.println("El fichero \""+archivo+"\" no existe");
             Logger.getLogger(CSVReader.class.getName()).log(Level.SEVERE, null, ex);
         } 
         catch (IOException ex) 
@@ -168,7 +167,7 @@ public class CSVReader
         entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner
         if(entradaTeclado.isEmpty()){
             System.out.println("Lectura de ruta predeterminada... \n");
-            entradaTeclado = "campsa.csv";
+            entradaTeclado = "campsa";
         }else{
             System.out.println("Lectura de "+entradaTeclado+"... \n");
         }
@@ -176,8 +175,7 @@ public class CSVReader
         
         if(true){
             t.startSendingCoodinates();
-            Mapinstance = new Map();
-            Mapinstance.initChangeStream();
+            Mapinstance = new MapCreator();
             Mapinstance.setVisible(true);
             Mapinstance.EditMap(CoordinatesList);
         }else{

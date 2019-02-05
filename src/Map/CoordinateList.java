@@ -15,20 +15,20 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
  * @author Carlos
  */
 public  class CoordinateList {
-    List<MapMarkerDot> EventMap;
+    List<MapMarkerDot> DotEventList;
     
     public CoordinateList(){
-         EventMap = new  ArrayList<MapMarkerDot>();
+         DotEventList = new  ArrayList<MapMarkerDot>();
     }
 
-    public List<MapMarkerDot> getEventPos() {
-        return EventMap;
+    public List<MapMarkerDot> getDotEventList() {
+        return DotEventList;
     }
     
-    public void putEventMap(Color color,double latitud,double longitud){
+    public void putDot(Color color,double latitud,double longitud){
         MapMarkerDot a = new MapMarkerDot(Color.BLACK, latitud, longitud);
         a.setBackColor(color);
-        EventMap.add(a);
+        DotEventList.add(a);
     }
     
 }

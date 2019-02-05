@@ -15,9 +15,9 @@ public class DirectionEvent  extends ComplexEvent {
     
     Vec2f direction;
     
-    public DirectionEvent(BasicEvent e,Vec2f cambio) {
+    public DirectionEvent(BasicEvent e,Vec2f vectorDirection) {
         super(e);
-        this.direction = cambio;
+        this.direction = vectorDirection;
     }
 
     public Vec2f getDirection() {
